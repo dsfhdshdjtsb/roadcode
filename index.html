@@ -4,11 +4,22 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="index.css">
     <title>Road Code</title>
 </head>
 <body>
-    
+    <div id="map"></div>
 
+    <!-- 
+     The `defer` attribute causes the callback to execute after the full HTML
+     document has been parsed. For non-blocking uses, avoiding race conditions,
+     and consistent behavior across browsers, consider loading using Promises
+     with https://www.npmjs.com/package/@googlemaps/js-api-loader.
+    -->
     <script src="js/index.js"></script>
+    <script
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCTlMIrLbEtYu8K7Kheto9hxaIqWjzOQ8E&callback=initMap&v=weekly&libraries=places"
+      defer
+    ></script>
 </body>
 </html>
