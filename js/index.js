@@ -35,7 +35,10 @@ async function genDestinationPoint(lat, lon, radius, kinds)
         count += 1;
         onWater = await getWater(point.lat, point.lon);
         attractions = await getAttractions(radius, point.lat, point.lon, kinds)
-    }while( count < 10 && onWater.water && attractions.features.length < 5)
+        console.log(count < 10)
+        console.log(onWater.water)
+        console.log(attractions.features.length)
+    }while( count < 10 && (onWater.water || attractions.features.length < 5))
     if(count < 10)
     {
         return attractions.features[0].geometry.coordinates
@@ -101,29 +104,39 @@ async function genWaypoints(waypointList, num, kinds){
         let count = 0
         let tempClusters = clusters
         let thisi = i;
+        let maxAttractionsNum = -1;
+        let maxAttractions
         do{
-        var thisPoint = waypointList[Math.floor(Math.random() * (waypointList.length / tempClusters * (thisi+1) - waypointList.length / tempClusters * thisi) + waypointList.length / tempClusters * thisi)];
-        var attractions = await getAttractions(16093, thisPoint.lat(), thisPoint.lng(), toString(kinds))
-        console.log(attractions);
-        console.log(radius *= 1.5);
-        console.log(count ++);
+          let index = Math.floor(Math.random() * (waypointList.length / tempClusters * (thisi+1) - waypointList.length / tempClusters * thisi) + waypointList.length / tempClusters * thisi)
+          var thisPoint = waypointList[index];
+          var attractions = await getAttractions(16093, thisPoint.lat(), thisPoint.lng(), toString(kinds))
+          console.log(attractions);
+          console.log(radius *= 1.5);
+          console.log(count ++);
 
-        let random = Math.random()
-        if((i < 4 && i > 0 && random >= 0.5) || i == 0)
+          if(attractions.features.length > maxAttractionsNum)
+          {
+            maxAttractionsNum = attractions.features.length
+            maxAttractions = attractions
+          }
+          let random = Math.random()
+          if((i < 4 && i > 0 && random >= 0.5) || i == 0)
+          {
+            console.log(thisi += count)
+            console.log(tempClusters += count)
+          }
+          else
+          {
+            console.log("test1")
+            tempClusters++
+            console.log(thisi)
+            console.log(tempClusters)
+          }
+        }while(attractions.features.length < num/5 && count < 3)
+        if(attractions.features.length < num/5 )
         {
-          console.log(thisi += count)
-          console.log(tempClusters += count)
+          attractions = maxAttractions
         }
-        else
-        {
-          console.log("test1")
-          thisi = Math.max(thisi - count, 0)
-          tempClusters = Math.max(tempClusters - count, 1)
-          console.log(thisi)
-          console.log(tempClusters)
-        }
-        }while(attractions.features.length < num/5 && count < 4)
-
         const shuffled = shuffle(attractions.features);
         for(let j = 0; j < num/5; j++)
         {
