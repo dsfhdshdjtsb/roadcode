@@ -2,10 +2,6 @@ otmApiKey= "5ae2e3f221c38a28845f05b63f732523be8926b6484b88151a8dd476";
 gmApiKey = "AIzaSyCTlMIrLbEtYu8K7Kheto9hxaIqWjzOQ8E"
 wApiKey = "jA5nqVNx_QBSh4TNxLr-"
 
-const fetchJson = async (link) => {
-    const response = await fetch(link);
-    const myJson = await response.json(); //extract JSON from the http response
-}
 
 const userAction = async (link) => {
     const response = await fetch(link);
@@ -138,7 +134,7 @@ function genReturnWaypoint(lat_1, lon_1, lat_2, lon_2)
 
 function initMap() {
     map = new google.maps.Map($("#map")[0], {
-        center: { lat: 36.967243, lng: -99.771556}, //center of US
+        center: { lat: 36.967243, lng: -99.771556 }, //center of US
         zoom: 5,
     });
     new PathHandler(map);
@@ -152,14 +148,13 @@ class PathHandler{
   constructor(map){
     this.directionsRenderer = new google.maps.DirectionsRenderer({draggable: true});
     this.directionsService = new google.maps.DirectionsService();
-    console.log(this.directionsRenderer)
     this.directionsRenderer.setMap(map);
     this.waypoints = [{location: "bakersfield, ca"}, {location:"tampa, fl"}];
     this.setupClickListener();
   }
 
   setupClickListener() {
-    const btn1 = $("#coolBtn")[0]
+    const btn1 = $("#coolBtn")[0];
 
     btn1.addEventListener("click", () => {
       let start = "33.6846, -117.8265"
@@ -193,7 +188,7 @@ class PathHandler{
     })
   }
 
-  generateFinalPath(){
+  createFinalPath(){
     this.directionsService
     .route({
       origin: "Irvine, CA", //can also take placeId and long/lat
@@ -204,12 +199,6 @@ class PathHandler{
       provideRouteAlternatives: true,
     })
     .then((response) => {
-      console.log(response)
-
-      let coordArray = response.routes[0].overview_path
-      console.log(coordArray[1].lat() + ", " + coordArray[1].lng()); 
-      console.log(coordArray.length) //amount of coords in the path
-
       this.directionsRenderer.setDirections(response); //if direction service receives a response, then render the directions given
     })
     .catch((e) => window.alert("Directions request failed")); //else no response, leave error message

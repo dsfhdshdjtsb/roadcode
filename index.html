@@ -5,15 +5,30 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="index.css">
+    <script src="https://kit.fontawesome.com/8b73df04b4.js" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito&family=Raleway:wght@400;600;700&display=swap" rel="stylesheet">
     <title>Road Code</title>
 </head>
 <body>
-    <button id="coolBtn">Click Me</button>
-    <div id="map"></div>
+  <div class="container">
+    <div class="navbar">
+      <button class="createBtn btn" id="coolBtn">Create Path</button>
+    </div>
+    <div class="btn menuIcon"><i class="fa-solid fa-bars"></i></div>
+  </div>
 
-    
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="js/index.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCTlMIrLbEtYu8K7Kheto9hxaIqWjzOQ8E&callback=initMap&v=weekly&libraries=places" defer></script>
+
+  <div id="map"></div>
+
+
+
+
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="js/index.js"></script>
+  <script src="js/animations.js"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCTlMIrLbEtYu8K7Kheto9hxaIqWjzOQ8E&callback=initMap&v=weekly&libraries=places" defer></script>
 </body>
 </html>
