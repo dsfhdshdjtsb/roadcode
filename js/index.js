@@ -25,7 +25,7 @@ const getWater = async(lat, lon) => {
     return water;
 }
 
-async function genDestinationPoint(lat, lon, radius)
+async function genDestinationPoint(lat, lon, radius, kinds)
 {
     let point;
     var count = 0;
@@ -34,12 +34,15 @@ async function genDestinationPoint(lat, lon, radius)
         point = generateRandomPoint(lat,lon, radius)
         count += 1;
         onWater = await getWater(point.lat, point.lon);
-    }while( count < 10 && onWater.water)
+        attractions = await getAttractions(radius, point.lat, point.lon, kinds)
+    }while( count < 10 && onWater.water && attractions.features.length < 5)
     if(count < 10)
     {
-        return point
+        return attractions.features[0].geometry.coordinates
     }
+    console.log("could not find a good destination point")
     return false;
+    
 }
 
 function generateRandomPoint(lat, lon, radius) {
@@ -90,24 +93,41 @@ function shuffle(array) {
 
 async function genWaypoints(waypointList, num, kinds){
     let locationList = [];
-    var iLimit = 5 //number of clusters dont worry about da name lol
-    for(let i = 0; i < iLimit; i++)
+    var clusters = 5 //number of clusters dont worry about da name lol
+    for(let i = 0; i < clusters; i++)
     {
-        
+        console.log(clusters)
         let radius = 16093;
         let count = 0
+        let tempClusters = clusters
+        let thisi = i;
         do{
-        var thisPoint = waypointList[Math.floor(Math.random() * (waypointList.length / iLimit * (i+1) - waypointList.length / iLimit * i) + waypointList.length / iLimit * i)];
+        var thisPoint = waypointList[Math.floor(Math.random() * (waypointList.length / tempClusters * (thisi+1) - waypointList.length / tempClusters * thisi) + waypointList.length / tempClusters * thisi)];
         var attractions = await getAttractions(16093, thisPoint.lat(), thisPoint.lng(), toString(kinds))
         console.log(attractions);
-        radius * 4
-        count ++
-        }while(attractions.features.length <= 5 && count < 3)
+        console.log(radius *= 1.5);
+        console.log(count ++);
+
+        let random = Math.random()
+        if((i < 4 && i > 0 && random >= 0.5) || i == 0)
+        {
+          console.log(thisi += count)
+          console.log(tempClusters += count)
+        }
+        else
+        {
+          console.log("test1")
+          thisi = Math.max(thisi - count, 0)
+          tempClusters = Math.max(tempClusters - count, 1)
+          console.log(thisi)
+          console.log(tempClusters)
+        }
+        }while(attractions.features.length < num/5 && count < 4)
 
         const shuffled = shuffle(attractions.features);
         for(let j = 0; j < num/5; j++)
         {
-          locationList.push(attractions.features[j])
+          locationList.push(shuffled[j])
         }
         console.log(locationList)
     }
@@ -159,10 +179,12 @@ class PathHandler{
     btn1.addEventListener("click", () => {
       let start = "33.6846, -117.8265"
       var self = this
-      genDestinationPoint(33.6846, -117.8265, 3000000).then(function(point){
-        let end = "" + point.lat + ", " + point.lon;
+      genDestinationPoint(33.6846, -117.8265, 2000000, ["historic"]).then(function(point){
+        let end = "" + point[1] + ", " + point[0];
         console.log(end);
-        let originalPath = self.generateShortPath(start,end)
+        return self.generateShortPath(start,end)
+      }).then(function(){
+        console.log(self.waypoints);
       })
     });
   }
