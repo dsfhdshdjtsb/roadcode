@@ -14,15 +14,84 @@
 <body>
   <div class="container">
     <div class="navbar">
+      <div class="checkContainer">
+        <div class="archCheckMenu">
+          <input value="architecture" id="archTitle" type="checkbox"></input><label class="titleCheck">Architecture</label>
+          <ul class="architectureContainer">
+            <label class="checkOption" for="bridgeCheck"><input value="bridges" id="bridgeCheck" type="checkbox">Bridges</label>
+            <label class="checkOption" for="histArchCheck"><input value="historic_architecture" id="histArchCheck" type="checkbox"></input>Historic Architecture</label>
+            <label class="checkOption" for="towersCheck"><input value="towers" id="towersCheck" type="checkbox">Towers</label>
+            <label class="checkOption" for="lightCheck"><input value="lighthouses" id="lightCheck" type="checkbox">Lighthouses</label>
+            <label class="checkOption" for="skyCheck"><input value="skyscrapers" id="skyCheck" type="checkbox">Skyscrapers</label>
+          </ul>
+        </div>
+        <div class="culturalCheckMenu">
+          <input value="cultural" id="culturalTitle" type="checkbox"></input><label class="titleCheck">Cultural</label>
+          <ul class="culturalContainer">
+            <label for="museumCheck"><input value="museums" id="museumCheck" type="checkbox">Museums</label>
+            <label for="theatreCheck"><input value="theatres_and_entertainments" id="theatreCheck" type="checkbox">Theatres</label>
+            <label for="urbanCheck"><input value="urban_environment" id="urbanCheck" type="checkbox">Urban Environnment</label>
+          </ul>
+        </div>
+        <div class="historicCheckMenu">
+          <input value="historic" id="historicTitle" type="checkbox"></input><label class="titleCheck">Historic</label>
+          <ul class="historicContainer">
+            <label for="archaeoCheck"><input value="archaeology" id="archaeoCheck" type="checkbox">Archaeology</label>
+            <label for="burialCheck"><input value="burial_places" id="burialCheck" type="checkbox">Burials Places</label>
+            <label for="fortCheck"><input value="fortifications" id="fortCheck" type="checkbox">Fortifications</label>
+            <label for="historicPlaceCheck"><input value="historical_places" id="historicPlaceCheck" type="checkbox">Historical Sites</label>
+            <label for="historicAttractCheck"><input value="historic_object" id="historicAttractCheck" type="checkbox">Historic Attractions</label>
+            <label for="monumentCheck"><input value="monuments_and_memorials" id="monumentCheck" type="checkbox">Monuments and Memorials</label>
+            
+          </ul>
+        </div>
+        <div class="naturalCheckMenu">
+          <input value="natural" id="naturalTitle" type="checkbox"></input><label class="titleCheck" id="natural">Natural</label>
+          <ul class="naturalContainer">
+            <label for="beachCheck"><input value="beaches" id="beachCheck" type="checkbox">Beaches</label>
+            <label for="viewCheck"><input value="view_points" id="viewCheck" type="checkbox">View Points</label>
+            <label for="geoFormCheck"><input value="geological_formations" id="geoFormCheck" type="checkbox">Geological Formations</label>
+            <label for="glacierCheck"><input value="glaciers" id="glacierCheck" type="checkbox">Glaciers</label>
+            <label for="islandCheck"><input value="islands" id="islandCheck" type="checkbox">Islands</label>
+            <label for="springCheck"><input value="natural_springs" id="springCheck" type="checkbox">Natural Springs</label>
+            <label for="natureCheck"><input value="nature_reserves" id="natureCheck" type="checkbox">Nature Reserves</label>
+            <label for="waterCheck"><input value="water" id="waterCheck" type="checkbox">Bodies of Water</label>
+          </ul>
+        </div>
+        <div class="sportCheckMenu">
+          <input value="sport" id="sportTitle" type="checkbox"></input><label class="titleCheck" id="sport">Sports</label>
+          <ul class="sportContainer">
+            <label for="climbingCheck"><input value="climbing" id="climbingCheck" type="checkbox">Climbing</label>
+            <label for="divingCheck"><input value="diving" id="divingCheck" type="checkbox">Diving</label>
+            <label for="kiteCheck"><input value="kitesurfing" id="kiteCheck" type="checkbox">Kitesurfing</label>
+            <label for="stadiumCheck"><input value="stadiums" id="stadiumCheck" type="checkbox">Stadiums</label>
+            <label for="surfCheck"><input value="surfing" id="surfCheck" type="checkbox">Surfing</label>
+            <label for="winterCheck"><input value="winter_sports" id="winterCheck" type="checkbox">Winter Sports</label>
+          </ul>
+        </div>
+        <div class="amusementCheckMenu">
+          <input value="amusements" id="amusementTitle" type="checkbox"></input><label class="titleCheck" id="amusements">Amusements</label>
+          <ul class="amusementsContainer">
+            <label for="parkCheck"><input value="amusement_parks" id="parkCheck" type="checkbox">Amusement Parks</label>
+            <label for="ferrisCheck"><input value="ferris_wheels" id="ferrisCheck" type="checkbox">Ferris Wheels</label>
+            <label for="miniCheck"><input value="miniature_parks" id="miniCheck" type="checkbox">Miniautre Parks</label>
+            <label for="rollerCheck"><input value="roller_coasters" id="rollerCheck" type="checkbox">Roller Coasters</label>
+            <label for="waterParkCheck"><input value="water_parks" id="waterParkCheck" type="checkbox">Water Parks</label>
+          </ul>
+        </div>
+
+      </div>
       <button class="createBtn btn" id="coolBtn">Create Path</button>
     </div>
     <div class="btn menuIcon"><i class="fa-solid fa-bars"></i></div>
   </div>
 
-
   <div id="map"></div>
 
-
+  <!-- <div>
+    <input type="checkbox" id="coding" name="interest" value="coding">
+    <label for="coding">Coding</label>
+  </div> -->
 
 
 
