@@ -20,6 +20,13 @@ const getAttractions = async(radius, lat, lon, kinds) => {
     return attractions
 }
 
+const getAddress = async(latlng) => {
+  const address = await userAction("https://maps.googleapis.com/maps/api/geocode/json?" +
+  "latlng=" + latlng.lat() + "," + latlng.lng() + "&key=" + gmApiKey);
+
+  return address
+}
+
 const getWater = async(lat, lon) => {
     const water = await userAction("https://api.onwater.io/api/v1/results/" + lat +","+ lon + "?access_token=" + wApiKey)
     return water;
@@ -110,6 +117,7 @@ async function genWaypoints(waypointList, num, kinds){
           let index = Math.floor(Math.random() * (waypointList.length / tempClusters * (thisi+1) - waypointList.length / tempClusters * thisi) + waypointList.length / tempClusters * thisi)
           var thisPoint = waypointList[index];
           var attractions = await getAttractions(16093, thisPoint.lat(), thisPoint.lng(), toString(kinds))
+          
           console.log(attractions);
           console.log(radius *= 1.8);
           console.log(count ++);
@@ -140,11 +148,15 @@ async function genWaypoints(waypointList, num, kinds){
         const shuffled = shuffle(attractions.features);
         for(let j = 0; j < num/5; j++)
         {
-          locationList.push(shuffled[j])
+          if(shuffled[j] != undefined)
+          {
+            
+            let address = await getAddress(new google.maps.LatLng(shuffled[j].geometry.coordinates[1],shuffled[j].geometry.coordinates[0] ))
+            locationList.push({location: address.plus_code.compound_code})
+          }
         }
         console.log(locationList)
     }
-    console.log(locationList)
     return locationList;
    
 }
@@ -170,19 +182,20 @@ function initMap() {
         center: { lat: 36.967243, lng: -99.771556 }, //center of US
         zoom: 5,
     });
-    new PathHandler(map);
+    var test = new PathHandler(map);
 };
 
 class PathHandler{
   directionsRenderer;
   directionsService;
+  destination
   waypoints;
   
   constructor(map){
     this.directionsRenderer = new google.maps.DirectionsRenderer({draggable: true});
     this.directionsService = new google.maps.DirectionsService();
     this.directionsRenderer.setMap(map);
-    this.waypoints = [{location: "bakersfield, ca"}, {location:"tampa, fl"}];
+    this.waypoints;
     this.setupClickListener();
   }
 
@@ -193,6 +206,12 @@ class PathHandler{
       let start = "33.6846, -117.8265"
       var self = this
       genDestinationPoint(33.6846, -117.8265, 2000000, ["historic"]).then(function(point){
+        getAddress(new google.maps.LatLng(point[1], point[0])).then(function(output)
+        {
+          console.log(output)
+          self.destination = output.plus_code.compound_code
+        })
+        console.log(self.destination)
         let end = "" + point[1] + ", " + point[0];
         console.log(end);
         return self.generateShortPath(start,end)
@@ -218,6 +237,7 @@ class PathHandler{
       genWaypoints(originalPath, 25, ["historic"]).then(function(waypoints){
         console.log(waypoints)
         self.waypoints = waypoints
+        self.createFinalPath();
       })
       console.log(this.waypoints)
     })
@@ -227,8 +247,8 @@ class PathHandler{
     this.directionsService
     .route({
       origin: "Irvine, CA", //can also take placeId and long/lat
-      destination: "New York City, New York",
-      waypoints: waypoints,
+      destination: this.destination,
+      waypoints: this.waypoints,
       travelMode: "DRIVING",
       optimizeWaypoints: true,
       provideRouteAlternatives: true,
