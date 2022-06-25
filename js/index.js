@@ -145,13 +145,19 @@ async function genWaypoints(waypointList, num, kinds){
         {
           attractions = maxAttractions
         }
-        const shuffled = shuffle(attractions.features);
+        // const shuffled = shuffle(attractions.features);
+        attractions.features.sort((a,b) => {
+          return b.properties.rate - a.properties.rate
+        })
+        shuffled = attractions.features
         for(let j = 0; j < num/5; j++)
         {
           if(shuffled[j] != undefined)
           {
             
             let address = await getAddress(new google.maps.LatLng(shuffled[j].geometry.coordinates[1],shuffled[j].geometry.coordinates[0] ))
+            console.log(shuffled[j].properties.rate)
+            
             locationList.push({location: address.plus_code.compound_code})
           }
         }
