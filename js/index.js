@@ -21,9 +21,9 @@ const getAttractions = async(radius, lat, lon, kinds) => {
 }
 
 const getAddress = async(latlng) => {
+  console.log("Attempting to get address of " + latlng)
   const address = await userAction("https://maps.googleapis.com/maps/api/geocode/json?" +
   "latlng=" + latlng.lat() + "," + latlng.lng() + "&key=" + gmApiKey);
-
   return address
 }
 
@@ -34,6 +34,7 @@ const getWater = async(lat, lon) => {
 
 async function genDestinationPoint(lat, lon, radius, kinds)
 {
+    console.log("Attempting to generate destination point")
     let point;
     var count = 0;
     let onWater;
@@ -42,15 +43,16 @@ async function genDestinationPoint(lat, lon, radius, kinds)
         count += 1;
         onWater = await getWater(point.lat, point.lon);
         attractions = await getAttractions(radius, point.lat, point.lon, kinds)
-        console.log(count < 10)
-        console.log(onWater.water)
-        console.log(attractions.features.length)
-    }while( count < 10 && (onWater.water || attractions.features.length < 5))
-    if(count < 10)
+        console.log("Current attempt number:" + count)
+        console.log("Current water status:" + onWater.water)
+        console.log("Current number of nearby attractions:" + attractions.features.length)
+    }while( count < 15 && (onWater.water || attractions.features.length < 5))
+    if(count < 15)
     {
+        console.log("Valid destination found at coordinates" + attractions.features[0].geometry.coordinates);
         return attractions.features[0].geometry.coordinates
     }
-    console.log("could not find a good destination point")
+    alert("could not find a good destination point")
     return false;
     
 }
@@ -79,7 +81,7 @@ function toString(kinds){
     let result = "";
     for(let i = 0; i < kinds.length; i++)
     {
-        result += kinds[i]
+        result = result + kinds[i] + "%2C"
     }
     return result
 }
@@ -102,11 +104,11 @@ function shuffle(array) {
 }
 
 async function genWaypoints(waypointList, num, kinds){
+  console.log("generating " + num + " waypoints of kind " + toString(kinds));
     let locationList = [];
     var clusters = 5 //number of clusters dont worry about da name lol
     for(let i = 0; i < clusters; i++)
     {
-        console.log(clusters)
         let radius = 16093;
         let count = 0
         let tempClusters = clusters
@@ -116,11 +118,12 @@ async function genWaypoints(waypointList, num, kinds){
         do{
           let index = Math.floor(Math.random() * (waypointList.length / tempClusters * (thisi+1) - waypointList.length / tempClusters * thisi) + waypointList.length / tempClusters * thisi)
           var thisPoint = waypointList[index];
-          var attractions = await getAttractions(16093, thisPoint.lat(), thisPoint.lng(), toString(kinds))
-          
+          var attractions = await getAttractions(16093, thisPoint.lat(), thisPoint.lng(), kinds)
           console.log(attractions);
-          console.log(radius *= 1.8);
-          console.log(count ++);
+          console.log("found " + attractions.features.length + " attractions about lat: " + thisPoint.lat() + " and lon: " + thisPoint.lng());
+          console.log("current radius: " + radius + " meters" );
+          radius *= 1.8
+          console.log("Current attempt: " + count++);
 
           if(attractions.features.length > maxAttractionsNum)
           {
@@ -130,15 +133,16 @@ async function genWaypoints(waypointList, num, kinds){
           let random = Math.random()
           if((i < 4 && i > 0 && random >= 0.5) || i == 0)
           {
-            console.log(thisi += count)
-            console.log(tempClusters += count)
+            console.log("current thisi value: " + thisi)
+            thisi += count;
+            console.log("current tempClusters value: " + tempClusters);
+            tempClusters += count;
           }
           else
           {
-            console.log("test1")
+            console.log("current thisi value: " + thisi)
+            console.log("current tempClusters value: " + tempClusters);
             tempClusters++
-            console.log(thisi)
-            console.log(tempClusters)
           }
         }while(attractions.features.length < num/5 && count < 3)
         if(attractions.features.length < num/5 )
@@ -150,19 +154,23 @@ async function genWaypoints(waypointList, num, kinds){
           return b.properties.rate - a.properties.rate
         })
         shuffled = attractions.features
+        console.log("attractions sorted by popularity rate: ")
+        console.log(shuffled)
         for(let j = 0; j < num/5; j++)
         {
           if(shuffled[j] != undefined)
           {
             
             let address = await getAddress(new google.maps.LatLng(shuffled[j].geometry.coordinates[1],shuffled[j].geometry.coordinates[0] ))
-            console.log(shuffled[j].properties.rate)
-            
-            locationList.push({location: address.plus_code.compound_code})
+            if(address.plus_code.compound_code != undefined)
+            {
+              console.log("Pushing following address to list" + address.plus_code.compound_code)
+              locationList.push({location: address.plus_code.compound_code})
+            }
           }
         }
-        console.log(locationList)
     }
+    console.log("finsihed generating waypoints! ")
     return locationList;
    
 }
@@ -194,6 +202,7 @@ function initMap() {
 class PathHandler{
   directionsRenderer;
   directionsService;
+  start;
   destination
   waypoints;
   
@@ -209,25 +218,44 @@ class PathHandler{
     const btn1 = $("#coolBtn")[0];
 
     btn1.addEventListener("click", () => {
-      let start = "33.6846, -117.8265"
+      console.log("Start button pressed!")
+      // let start = "33.6846, -117.8265"
+      this.start = "Irvine, Ca"
+      let startCords = [33.6846, -117.8265]
+      let distance = 2000000
       var self = this
-      genDestinationPoint(33.6846, -117.8265, 2000000, ["historic"]).then(function(point){
-        getAddress(new google.maps.LatLng(point[1], point[0])).then(function(output)
-        {
-          console.log(output)
-          self.destination = output.plus_code.compound_code
-        })
-        console.log(self.destination)
-        let end = "" + point[1] + ", " + point[0];
-        console.log(end);
-        return self.generateShortPath(start,end)
-      }).then(function(){
-        console.log(self.waypoints);
-      })
+      let kinds = ["historic", "churches"]
+
+      let counter = 0
+      while(counter < 5){
+        try{
+          genDestinationPoint(startCords[0], startCords[1], distance, kinds).then(function(point){
+            getAddress(new google.maps.LatLng(point[1], point[0])).then(function(output)
+            {
+              if(output == undefined || output.plus_code == undefined || output.plus_code.compound_code == undefined)
+              {
+                throw "could not find address"
+              }
+              console.log(output)
+              self.destination = output.plus_code.compound_code
+              console.log("Valid destination found at address " + self.destination);
+              let end = "" + point[1] + ", " + point[0];
+              return self.generateShortPath(self.start, self.destination)
+            })
+          }).then(function(){
+            console.log(self.waypoints);
+          })
+          counter = 10
+        }
+        catch{
+          counter++
+        }
+    }
     });
   }
 
   generateShortPath(start, end){
+    console.log("Attempting to generate short path from" + start + " to " + end);
     this.directionsService
     .route({
       origin: start, //can also take placeId and long/lat
@@ -236,23 +264,24 @@ class PathHandler{
     })
     .then((response) => { 
       let originalPath = response.routes[0].overview_path; //array of coords on the shortest path
-      console.log(originalPath[1].lat() + ", " + (originalPath[1].lng())); 
-      console.log(originalPath.length) //amount of coords in the path
       console.log(originalPath);
+      console.log("Generated array of " + originalPath.length + " points from shortpath");
+
       var self = this
-      genWaypoints(originalPath, 25, ["historic"]).then(function(waypoints){
-        console.log(waypoints)
+      console.log("Attempting to generate POI");
+      genWaypoints(originalPath, 25, ["historic", "churches"]).then(function(waypoints){
         self.waypoints = waypoints
         self.createFinalPath();
       })
-      console.log(this.waypoints)
+      console.log("waypoints:" + this.waypoints)
     })
   }
 
   createFinalPath(){
+    console.log("creating final path from " + this.start + " to " + this.destination);
     this.directionsService
     .route({
-      origin: "Irvine, CA", //can also take placeId and long/lat
+      origin: this.start, //can also take placeId and long/lat
       destination: this.destination,
       waypoints: this.waypoints,
       travelMode: "DRIVING",
@@ -262,7 +291,7 @@ class PathHandler{
     .then((response) => {
       this.directionsRenderer.setDirections(response); //if direction service receives a response, then render the directions given
     })
-    .catch((e) => window.alert("Directions request failed")); //else no response, leave error message
+    
   }
 
 }
