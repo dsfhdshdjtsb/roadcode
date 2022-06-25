@@ -71,43 +71,43 @@ function toString(kinds){
     return result
 }
 
-function genWaypoints(waypointList, num, kinds){
-    let locationList = [];
-    for(let i = 0; i < 4; i++)
-    {
-        let thisPoint = Math.floor(Math.random() * (waypointList.length / 5 * (i+1) - waypointList.length / 5 * i) + waypointList.length / 5 * i);
-        let attractions = getAttractions(16093, thisPoint.lat(), thispoint.lng(), toString(kinds));
-        for(let j = 0; j < num/5; j++)
-        {
-            locationList.push(attractions[Math.floor(Math.random() * (attractions.length  + 1))])
-        }
-    }
-    return locationList;
-}
+// function genWaypoints(waypointList, num, kinds){
+//     let locationList = [];
+//     for(let i = 0; i < 4; i++)
+//     {
+//         let thisPoint = Math.floor(Math.random() * (waypointList.length / 5 * (i+1) - waypointList.length / 5 * i) + waypointList.length / 5 * i);
+//         let attractions = getAttractions(16093, thisPoint.lat(), thispoint.lng(), toString(kinds));
+//         for(let j = 0; j < num/5; j++)
+//         {
+//             locationList.push(attractions[Math.floor(Math.random() * (attractions.length  + 1))])
+//         }
+//     }
+//     return locationList;
+// }
 
-function genReturnWaypoint(lat_1, lon_1, lat_2, lon_2)
-{
-    if(!getWater(lat_1, lon_2).water)
-    {
-        return {"lat": lat_1, "lon": lon_2}
-    }
-    else if (!getWater(lat_2, lon_1).water)
-    {
-        return {"lat": lat_2, "lon": lon_1}
-    }
-    else
-    {
-        return false
-    }
-}
-async function logPromiseResult() {
-    console.log(await getAttractions(1000000, 33.656956, -117.798633, ["historic"]));
-}
-logPromiseResult();
+// function genReturnWaypoint(lat_1, lon_1, lat_2, lon_2)
+// {
+//     if(!getWater(lat_1, lon_2).water)
+//     {
+//         return {"lat": lat_1, "lon": lon_2}
+//     }
+//     else if (!getWater(lat_2, lon_1).water)
+//     {
+//         return {"lat": lat_2, "lon": lon_1}
+//     }
+//     else
+//     {
+//         return false
+//     }
+// }
+// async function logPromiseResult() {
+//     console.log(await getAttractions(1000000, 33.656956, -117.798633, ["historic"]));
+// }
+// logPromiseResult();
 
 
 function initMap() {
-    map = new google.maps.Map(document.getElementById("map"), {
+    map = new google.maps.Map($("#map")[0], {
         center: { lat: 36.967243, lng: -99.771556 }, //center of US
         zoom: 5,
     });
@@ -130,11 +130,11 @@ class PathHandler{
   }
 
   setupClickListener() {
-    const btn1 = document.getElementById("coolBtn");
+    const btn1 = $("#coolBtn")[0];
 
-    btn1.addEventListener("click", ()=>{
+    $("#coolBtn").click(()=>{
       this.generateShortPath();
-    });
+    })
   }
 
   generateShortPath(){
@@ -184,4 +184,4 @@ class PathHandler{
 // genDestinationPoint(33.656956, -117.798633, 100000)
 // console.log(generateRandomPoint( 33.656956, -117.798633, 100000));
 
-console.log(genWaypoints(0, 0, 25, 25, 10));
+// console.log(genWaypoints(0, 0, 25, 25, 10));

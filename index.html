@@ -5,13 +5,22 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="index.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
     <title>Road Code</title>
 </head>
 <body>
-    <button id="coolBtn">Click Me</button>
-    <div id="map"></div>
+    <div class="flexContainer">
+      <div class="navbar">
+        <button class="createBtn" id="coolBtn">Create Path</button>
+      </div>
+      <div id="map"></div>
+    </div>
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="js/index.js"></script>
+    <script src="js/animations.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCTlMIrLbEtYu8K7Kheto9hxaIqWjzOQ8E&callback=initMap&v=weekly&libraries=places" defer></script>
 </body>
 </html>
