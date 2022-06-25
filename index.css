@@ -37,7 +37,22 @@ html, body {
   border-radius: 0;
 }
 
-ul{
+.checkMenu{
+  background-color: #e0e0e0;
+  border-radius: 4px;
+  padding: 10px 5px 5px 5px;
+  margin: 0 0 20px 0;
+}
+
+.checkOption input{
+  margin-right: 0.3rem;
+}
+
+.titleCheck input{
+  margin-right: 0.5rem;
+}
+
+.ulCheck{
   display: flex;
   flex-direction: column;
   padding-left: 10px;
@@ -45,27 +60,36 @@ ul{
   flex-wrap: wrap;
 }
 
-.checkMenu{
-  display: flex;
-  flex-direction: column;
-  width: 200px;
-}
-
-.archCheckMenu{
-  white-space: nowrap;
-  overflow: hidden;
-}
-
 .checkOption{
   display:block;
   white-space: nowrap;
+  margin: 5px 0 0 0;
 }
 
+.titleCheck{
+  font-weight: 700;
+}
+
+.checkContainer{
+  font-family: "Raleway", sans-serif;
+  font-size:1rem;
+  overflow-y:auto;
+  width: 300px;
+  height: 100vh;
+}
+
+.slideIcon{
+  float: right;
+  margin: 10px 20px 0 0;
+  -moz-transition: transform 0.5s;
+  -webkit-transition: transform 0.5s;
+  transition: transform 0.5s;
+}
 
 .navbar{
   height: 100vh;
   padding: 6% 0 0 6%;
-  width: 300px;
+  width: 330px;
   background-color: white;
 }
 
@@ -77,6 +101,15 @@ ul{
 }
 
 
+
 .btn:hover {
   background-color: rgb(56, 228, 162);
+}
+
+.rotated {
+  transform: rotate(180deg);
+  -ms-transform: rotate(180deg); /* IE 9 */
+  -moz-transform: rotate(180deg); /* Firefox */
+  -webkit-transform: rotate(180deg); /* Safari and Chrome */
+  -o-transform: rotate(180deg); /* Opera */
 }
