@@ -2,12 +2,6 @@ otmApiKey= "5ae2e3f221c38a28845f05b63f732523be8926b6484b88151a8dd476";
 gmApiKey = "AIzaSyCTlMIrLbEtYu8K7Kheto9hxaIqWjzOQ8E"
 wApiKey = "jA5nqVNx_QBSh4TNxLr-"
 
-const fetchJson = async (link) => {
-    const response = await fetch(link);
-    const myJson = await response.json(); //extract JSON from the http response
-}
-
-
 
 const userAction = async (link) => {
     const response = await fetch(link);
@@ -82,8 +76,8 @@ function toString(kinds){
 
 
 function initMap() {
-    map = new google.maps.Map($("#map")[0], {
-        center: { lat: 36.967243, lng: -99.771556}, //center of US
+    map = new google.maps.Map(document.getElementById("map"), {
+        center: { lat: 36.967243, lng: -99.771556 }, //center of US
         zoom: 5,
     });
     new PathHandler(map);
@@ -98,7 +92,6 @@ class PathHandler{
   constructor(map){
     this.directionsRenderer = new google.maps.DirectionsRenderer({draggable: true});
     this.directionsService = new google.maps.DirectionsService();
-    console.log(this.directionsRenderer)
     this.directionsRenderer.setMap(map);
     this.waypoints = [{location: "bakersfield, ca"}, {location:"tampa, fl"}];
     this.originalPath = "";
@@ -106,10 +99,10 @@ class PathHandler{
   }
 
   setupClickListener() {
-    const btn1 = $("#coolBtn")[0]
+    const btn1 = document.getElementById("coolBtn");
 
-    btn1.addEventListener("click", () => {
-      this.generateShortPath()
+    btn1.addEventListener("click", ()=>{
+      this.generateShortPath();
     });
   }
 
@@ -121,14 +114,14 @@ class PathHandler{
       travelMode: "DRIVING",
     })
     .then((response) => { 
-      this.originalPath = response.routes[0].overview_path; //array of coords on the shortest path
-      console.log(this.originalPath[1].lat() + ", " + (this.originalPath[1].lng())); 
+      this.originalPath = response.routes[0].overview_path; //array of coords on the path
+      console.log(this.originalPath[1].lat() + ", " + (this.originalPath[1].lng()));  //each index holds an object and to access long and lat, you have to call those functions
       console.log(this.originalPath.length) //amount of coords in the path
       return this.originalPath;
     })
   }
 
-  generateFinalPath(){
+  createFinalPath(){
     this.directionsService
     .route({
       origin: "Irvine, CA", //can also take placeId and long/lat
@@ -139,12 +132,6 @@ class PathHandler{
       provideRouteAlternatives: true,
     })
     .then((response) => {
-      console.log(response)
-
-      let coordArray = response.routes[0].overview_path
-      console.log(coordArray[1].lat() + ", " + coordArray[1].lng()); 
-      console.log(coordArray.length) //amount of coords in the path
-
       this.directionsRenderer.setDirections(response); //if direction service receives a response, then render the directions given
     })
     .catch((e) => window.alert("Directions request failed")); //else no response, leave error message
