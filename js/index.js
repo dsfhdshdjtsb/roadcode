@@ -13,7 +13,7 @@ const userAction = async (link) => {
     // do something with myJson
   }
 
-const getAttractions = async(radius, lat, lon, kinds,) => {
+const getAttractions = async(radius, lat, lon, kinds) => {
     let kindsstr = toString(kinds);
     const attractions = await userAction("http://api.opentripmap.com/0.1/en/places/radius?radius="
     + radius
@@ -74,19 +74,50 @@ function toString(kinds){
     }
     return result
 }
+function shuffle(array) {
+  let currentIndex = array.length,  randomIndex;
 
-function genWaypoints(waypointList, num, kinds){
+  // While there remain elements to shuffle.
+  while (currentIndex != 0) {
+
+    // Pick a remaining element.
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex--;
+
+    // And swap it with the current element.
+    [array[currentIndex], array[randomIndex]] = [
+      array[randomIndex], array[currentIndex]];
+  }
+
+  return array;
+}
+
+async function genWaypoints(waypointList, num, kinds){
     let locationList = [];
-    for(let i = 0; i < 4; i++)
+    var iLimit = 5 //number of clusters dont worry about da name lol
+    for(let i = 0; i < iLimit; i++)
     {
-        let thisPoint = Math.floor(Math.random() * (waypointList.length / 5 * (i+1) - waypointList.length / 5 * i) + waypointList.length / 5 * i);
-        let attractions = getAttractions(16093, thisPoint.lat(), thispoint.lng(), toString(kinds));
+        
+        let radius = 16093;
+        let count = 0
+        do{
+        var thisPoint = waypointList[Math.floor(Math.random() * (waypointList.length / iLimit * (i+1) - waypointList.length / iLimit * i) + waypointList.length / iLimit * i)];
+        var attractions = await getAttractions(16093, thisPoint.lat(), thisPoint.lng(), toString(kinds))
+        console.log(attractions);
+        radius * 4
+        count ++
+        }while(attractions.features.length <= 5 && count < 3)
+
+        const shuffled = shuffle(attractions.features);
         for(let j = 0; j < num/5; j++)
         {
-            locationList.push(attractions[Math.floor(Math.random() * (attractions.length  + 1))])
+          locationList.push(attractions.features[j])
         }
+        console.log(locationList)
     }
+    console.log(locationList)
     return locationList;
+   
 }
 
 function genReturnWaypoint(lat_1, lon_1, lat_2, lon_2)
@@ -104,11 +135,6 @@ function genReturnWaypoint(lat_1, lon_1, lat_2, lon_2)
         return false
     }
 }
-async function logPromiseResult() {
-    console.log(await getAttractions(1000000, 33.656956, -117.798633, ["historic"]));
-}
-logPromiseResult();
-
 
 function initMap() {
     map = new google.maps.Map($("#map")[0], {
@@ -121,7 +147,6 @@ function initMap() {
 class PathHandler{
   directionsRenderer;
   directionsService;
-  originalPath;
   waypoints;
   
   constructor(map){
@@ -130,7 +155,6 @@ class PathHandler{
     console.log(this.directionsRenderer)
     this.directionsRenderer.setMap(map);
     this.waypoints = [{location: "bakersfield, ca"}, {location:"tampa, fl"}];
-    this.originalPath = "";
     this.setupClickListener();
   }
 
@@ -138,22 +162,34 @@ class PathHandler{
     const btn1 = $("#coolBtn")[0]
 
     btn1.addEventListener("click", () => {
-      this.generateShortPath()
+      let start = "33.6846, -117.8265"
+      var self = this
+      genDestinationPoint(33.6846, -117.8265, 3000000).then(function(point){
+        let end = "" + point.lat + ", " + point.lon;
+        console.log(end);
+        let originalPath = self.generateShortPath(start,end)
+      })
     });
   }
 
-  generateShortPath(){
+  generateShortPath(start, end){
     this.directionsService
     .route({
-      origin: "Irvine, CA", //can also take placeId and long/lat
-      destination: "New York City, New York",
+      origin: start, //can also take placeId and long/lat
+      destination: end,
       travelMode: "DRIVING",
     })
     .then((response) => { 
-      this.originalPath = response.routes[0].overview_path; //array of coords on the shortest path
-      console.log(this.originalPath[1].lat() + ", " + (this.originalPath[1].lng())); 
-      console.log(this.originalPath.length) //amount of coords in the path
-      return this.originalPath;
+      let originalPath = response.routes[0].overview_path; //array of coords on the shortest path
+      console.log(originalPath[1].lat() + ", " + (originalPath[1].lng())); 
+      console.log(originalPath.length) //amount of coords in the path
+      console.log(originalPath);
+      var self = this
+      genWaypoints(originalPath, 25, ["historic"]).then(function(waypoints){
+        console.log(waypoints)
+        self.waypoints = waypoints
+      })
+      console.log(this.waypoints)
     })
   }
 
@@ -186,13 +222,3 @@ class PathHandler{
 
 
 // }
-
-  
-
-
-// userAction('http://api.opentripmap.com/0.1/en/places/bbox?lon_min=38.364285&lat_min=59.855685&lon_max=38.372809&lat_max=59.859052&kinds=churches&format=geojson&apikey=' + otmApiKey);
-// userAction('http://api.opentripmap.com/0.1/en/places/xid/W37900074?apikey=' + otmApiKey);
-// genDestinationPoint(33.656956, -117.798633, 100000)
-// console.log(generateRandomPoint( 33.656956, -117.798633, 100000));
-
-console.log(genWaypoints(0, 0, 25, 25, 10));
