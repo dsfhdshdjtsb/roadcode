@@ -111,7 +111,7 @@ async function genWaypoints(waypointList, num, kinds){
           var thisPoint = waypointList[index];
           var attractions = await getAttractions(16093, thisPoint.lat(), thisPoint.lng(), toString(kinds))
           console.log(attractions);
-          console.log(radius *= 1.5);
+          console.log(radius *= 1.8);
           console.log(count ++);
 
           if(attractions.features.length > maxAttractionsNum)
