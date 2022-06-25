@@ -257,7 +257,7 @@ class PathHandler{
       waypoints: this.waypoints,
       travelMode: "DRIVING",
       optimizeWaypoints: true,
-      provideRouteAlternatives: true,
+      provideRouteAlternatives: false,
     })
     .then((response) => {
       this.directionsRenderer.setDirections(response); //if direction service receives a response, then render the directions given
