@@ -1,6 +1,4 @@
-
-// $(".container").animate({width:'5%'}, 250);
-// $(".createBtn").animate({width:'toggle%'}, 250);
+$(".checkOption").hide();
 
 $(".menuIcon").click(()=>{
     if ($(".container").css("left") == "-305px") {
@@ -10,12 +8,15 @@ $(".menuIcon").click(()=>{
     }
 });
 
-$(".titleCheck").on("click", function(e){
-    
+$(".slideIcon").on("click", function(e){
+    $(this).toggleClass("rotated")
+    let options = $(this).next().children();
+    if (options.is(":visible")){
+        options.slideDown()
+    }
+    else{
+        options.slideUp()
+    }
     $(this).next().children().slideToggle();
 
-    // console.log("Added!");
-    // let clicked = $(this.element);
-    // let category = clicked.siblings();
-    // category.fadeOut();
 })
