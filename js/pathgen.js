@@ -347,7 +347,8 @@ class PathHandler{
 
   createMarkers(){
     var self = this;
-    var i = 0;                  
+    var i = 0;        
+    console.log(self.waypoints.length)          
     function myLoop() {         
       setTimeout(function() {   
         let marker = new google.maps.Marker({
@@ -356,7 +357,8 @@ class PathHandler{
         })
         marker.setMap(self.map);
         userAction("http://api.opentripmap.com/0.1/en/places/xid/" + self.waypoints[i].id + "?apikey=" +otmApiKey).then(function(locationData){
-          self.markers.push({marker: locationData});
+          self.markers.push(marker);
+          self.createInfoWindow(marker, locationData);
         })
         i++;                    
         if (i < self.waypoints.length) {           
@@ -366,11 +368,25 @@ class PathHandler{
     }
 
       myLoop();    
-      this.createInfoWindows();
   }
 
-  createInfoWindows(){
-    console.log(this.markers)
+  createInfoWindow(marker, locData){
+    let descrip;
+    if (locData.wikipedia_extracts == undefined){
+      descrip = ""
+    }else{
+      descrip = locData.wikipedia_extracts.html;
+    }
+    let infoWindow = new google.maps.InfoWindow({
+      content: descrip
+    })
+    marker.addListener("click", () =>{
+      infoWindow.open({
+        anchor: marker,
+        shouldFocus: false,
+      })
+      infoWindow.setMap(self.map)
+    })
   }
 
   createFinalPath(){
