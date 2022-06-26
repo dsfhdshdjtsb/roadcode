@@ -38,11 +38,12 @@ html, body {
 }
 
 .checkMenu{
-  background-color: #e0e0e0;
+  background-color: #efebeb;
   border-radius: 4px;
   width: 260px;
   padding: 10px 10px 3px 15px;
   margin: 0 0 20px 0;
+  border: 1px solid lightgray;
 }
 
 .checkLabel input{
@@ -101,13 +102,31 @@ input[type="checkbox"]::before {
   }
 input[type="checkbox"]:checked {
     color: white;
-    border-color: #4285F4;
-    background: #4285F4;
+    border-color: rgb(56, 245, 172);
+    background: rgb(56, 245, 172);
   }
 input[type="checkbox"]:checked::before {
   opacity: 1;
 }
 
+.loader {
+  display: inline-block;
+  border: 3px solid #cdcdcd; /* Light grey */
+  border-top: 3px solid #3498db; /* Blue */
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  animation: spin 2s linear infinite;
+  position: relative;
+  top: 8px;
+  visibility: hidden;
+  left: 20px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
 
 /* scroll wheel */
 
@@ -127,7 +146,14 @@ input[type="checkbox"]:checked::before {
 
 
 .textInput{
+  font-family: "Raleway", sans-serif;
+  font-weight: 700;
+  margin-bottom: 20px;
+  padding: 10px;
   width: 200px;
+  font-size: 0.8rem;
+  border: 2px solid rgb(56, 228, 162);;
+  border-radius: 4px;
 }
 
 .slideIcon{
@@ -143,16 +169,25 @@ input[type="checkbox"]:checked::before {
   font-family: "Raleway", sans-serif;
   font-size:1rem;
   height: 100vh;
-  padding: 6% 0 0 6%;
+  padding: 1% 0 0 6%;
   width: 330px;
   background-color: white;
 }
 
+.errortext{
+  color: red;
+  font-family: "Raleway", sans-serif;
+  font-weight: 700;
+  font-size: 0.8rem;
+  margin-top: 7px;
+}
+
 .filters{
   overflow-y:overlay;
-  position: absolute; 
-  bottom: 0;
-  height: 55vh;
+  position: absolute;
+  border-radius: 4px; 
+  bottom: 10px;
+  height: 70vh;
 }
 
 .options{

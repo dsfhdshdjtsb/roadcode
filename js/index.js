@@ -14,3 +14,5 @@ $(".checkLabel").change(function(){
             $(this).parent().siblings().children().prop('checked', true);
         }
 })
+
+$(".titleCheck").trigger("click");

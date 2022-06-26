@@ -241,7 +241,7 @@ class PathHandler{
 
     createPathBtn.addEventListener("click", () => {
       
-      console.log("Start button pressed!")
+      $(".loader").fadeIn();
       // let start = "33.6846, -117.8265"
       this.start = ""
       for (let i=0; i<this.originPlace.address_components.length; i++){
