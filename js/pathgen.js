@@ -207,6 +207,7 @@ class PathHandler{
   kinds;
   map;
   markers;
+  infowindows;
   destination;
   destinationCords;
   waypoints;
@@ -222,6 +223,7 @@ class PathHandler{
     this.directionsRenderer.setMap(map);
     this.map = map;
     this.markers=[];
+    this.infowindows=[];
     this.waypoints = [];
     this.originPlace = "";
     this.setupClickListener();
@@ -250,6 +252,7 @@ class PathHandler{
         $(".errortext").text("Please fill out all fields")
         return;
       }
+
       $(".loader").fadeIn();
       $(".createBtn").prop("disabled", true);
       this.start = ""
@@ -383,6 +386,7 @@ class PathHandler{
   }
 
   createInfoWindow(marker, locData){
+    var self = this;
     console.log(locData)
     let descrip = "No description";
     let wikiLink = "";
@@ -396,22 +400,37 @@ class PathHandler{
 
     if (locData.image != undefined){
       infoContent = "<div style='font-family: sans-serif;'><p style='text-align: center;'><span style='text-decoration: underline;'><strong>"+ locData.name +
-      "</strong></span></p>" + descrip +"<br/><a href='"+wikiLink+"'>"+wikiLink+"</a><p>&nbsp;</p><img style='display: block; margin-left: auto; margin-right: auto;' src='"+ locData.preview.source +"' alt='' width='"+locData.preview.width+"' height='"+locData.preview.height+"'/></div>"
+      "</strong></span></p><p>tags: "+locData.kinds+"</p>" + descrip +"<br/><a href='"+wikiLink+"'>"+wikiLink+"</a><p>&nbsp;</p><img style='display: block; margin-left: auto; margin-right: auto;' src='"+ locData.preview.source +"' alt='' width='"+locData.preview.width+"' height='"+locData.preview.height+"'/></div>"
     }else{
       infoContent = "<div style='font-family: sans-serif;'><p style='text-align: center;'><span style='text-decoration: underline;'><strong>"+ locData.name +
-      "</strong></span></p>" + descrip +"<br/><a href='"+wikiLink+"'>"+wikiLink+"</a><p>&nbsp;</p></div>"
+      "</strong></span></p><p>tags: "+locData.kinds+"</p>" + descrip +"<br/><a href='"+wikiLink+"'>"+wikiLink+"</a><p>&nbsp;</p></div>"
     }
 
     let infoWindow = new google.maps.InfoWindow({
       content: infoContent
     })
+    this.infowindows.push(infoWindow);
     marker.addListener("click", () =>{
       infoWindow.open({
         anchor: marker,
         shouldFocus: false,
       })
       infoWindow.setMap(self.map)
+      self.closeInfoWindows();
     })
+
+
+    this.map.addListener("click", ()=>{
+      this.closeInfoWindows();
+    })
+  }
+
+  closeInfoWindows(){
+    for (let i=0; i < this.infowindows.length; i++){
+      if (this.infowindows[i]){
+        this.infowindows[i].close();
+      }
+    }
   }
 
   createFinalPath(){
