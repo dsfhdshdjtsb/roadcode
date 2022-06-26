@@ -207,6 +207,7 @@ class PathHandler{
   kinds;
   destination
   waypoints;
+  createPathBtn;
   
   constructor(map){
     this.directionsRenderer = new google.maps.DirectionsRenderer({draggable: true});
@@ -236,11 +237,10 @@ class PathHandler{
   }
 
   setupClickListener() {
-    const createPathBtn = $(".createBtn")[0];
+    this.createPathBtn = $(".createBtn")[0];
     const distanceTxt = $("#distanceTxt")[0];
 
-    createPathBtn.addEventListener("click", () => {
-      $(".errortext").text("")
+    this.createPathBtn.addEventListener("click", () => {
 
       if (this.originPlace == undefined || distanceTxt.value == ""){
         $(".errortext").text("Please fill out all fields")
@@ -267,7 +267,7 @@ class PathHandler{
             {
               if(output == undefined || output.plus_code == undefined || output.plus_code.compound_code == undefined)
               {
-                $(".errortext").text("Server error. Please try again.");
+                self.createPathBtn.dispatchEvent(new Event("click"));
                 return;
               }
               console.log(output)
@@ -335,6 +335,10 @@ class PathHandler{
       })
       console.log("waypoints:" + this.waypoints)
     })
+    .catch((e) => {
+      console.log("short path not found")
+      this.createPathBtn.dispatchEvent(new Event("click"));
+    });
   }
 
   createMarkers(){
@@ -350,12 +354,12 @@ class PathHandler{
     console.log("creating final path from " + this.start + " to " + this.destination);
     let waypointNoID = JSON.parse(JSON.stringify(this.waypoints));
     console.log(waypointNoID);
-    for (let i = 0; i < 5; i++){
-      userAction("https://api.opentripmap.com/0.1/en/places/xid/" + this.waypoints[i].id + "?apikey=" +otmApiKey).then(function(location){
-        console.log(location)
-        console.log(location.wikipedia)
-      })
-    }
+    // for (let i = 0; i < 5; i++){
+    //   userAction("https://api.opentripmap.com/0.1/en/places/xid/" + this.waypoints[i].id + "?apikey=" +otmApiKey).then(function(location){
+    //     console.log(location)
+    //     console.log(location.wikipedia)
+    //   })
+    // }
     for (let i = 0; i < waypointNoID.length; i++){
       delete waypointNoID[i].id
     }
@@ -372,18 +376,13 @@ class PathHandler{
     })
     .then((response) => {
       this.directionsRenderer.setDirections(response); //if direction service receives a response, then render the directions given
+      //this.createMarkers();
+    })
+    .catch((e) => {
       $(".loader").fadeOut();
       $(".createBtn").prop("disabled", false);
-      this.createMarkers();
-    })
-    .catch((e) => {
-      $(".errortext").text("Directions request failed, try again"); //else no response, leave error message
-    })
-    .catch((e) => {
-      
-      $(".errortext").text("Directions request failed, try again");
       console.log("directions failed")    
-      createPathBtn.dispatchEvent(new Event("click"));
+      this.createPathBtn.dispatchEvent(new Event("click"));
     }
     ); //else no response, leave error message
     
