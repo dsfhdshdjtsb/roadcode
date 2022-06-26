@@ -385,7 +385,7 @@ class PathHandler{
         if (i < self.waypoints.length) {           
           myLoop();            
         }                      
-      }, 300)
+      }, 350)
     }
 
       myLoop();    
