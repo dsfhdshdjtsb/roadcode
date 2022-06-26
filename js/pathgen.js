@@ -372,14 +372,26 @@ class PathHandler{
 
   createInfoWindow(marker, locData){
     console.log(locData)
-    let descrip;
-    if (locData.wikipedia_extracts == undefined){
-      descrip = ""
-    }else{
-      descrip = locData.wikipedia_extracts.html;
+    let descrip = "No description";
+    let wikiLink = "";
+    let infoContent = "";
+    if (locData.wikipedia_extracts != undefined){
+      if (locData.wikipedia.substring(0,10) == "https://en"){
+        descrip = locData.wikipedia_extracts.html;
+        wikiLink = locData.wikipedia;
+      }
     }
+
+    if (locData.image != undefined){
+      infoContent = "<div style='font-family: sans-serif;'><p style='text-align: center;'><span style='text-decoration: underline;'><strong>"+ locData.name +
+      "</strong></span></p>" + descrip +"<br/><a href='"+wikiLink+"'>"+wikiLink+"</a><p>&nbsp;</p><img style='display: block; margin-left: auto; margin-right: auto;' src='"+ locData.preview.source +"' alt='' width='"+locData.preview.width+"' height='"+locData.preview.height+"'/></div>"
+    }else{
+      infoContent = "<div style='font-family: sans-serif;'><p style='text-align: center;'><span style='text-decoration: underline;'><strong>"+ locData.name +
+      "</strong></span></p>" + descrip +"<br/><a href='"+wikiLink+"'>"+wikiLink+"</a><p>&nbsp;</p></div>"
+    }
+
     let infoWindow = new google.maps.InfoWindow({
-      content: descrip
+      content: infoContent
     })
     marker.addListener("click", () =>{
       infoWindow.open({
