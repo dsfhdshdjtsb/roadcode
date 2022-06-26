@@ -18,7 +18,7 @@ Road code is REVOLUTIONARY(maybe) program made to make planning roadtrips easier
 2. input your starting location, the distance you want to travel, and select what kind of places interest you.
  ![image](https://user-images.githubusercontent.com/66652245/175808102-97b07b51-d229-4a7d-9b60-bbf81ca012a9.png)
 3. click CREATE YOUR ADVENTURE to generate a UNIQUE and PERSONALLIZED road trip!
-![image](https://user-images.githubusercontent.com/66652245/175808167-3ad7dc81-dca8-4498-b5bb-06e92045bb1c.png)
+![image](https://user-images.githubusercontent.com/66652245/175808329-5ba59e37-5ac3-4be0-9f3f-dcb2c7d65f1d.png)
 
 
 
