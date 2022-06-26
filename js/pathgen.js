@@ -356,7 +356,7 @@ class PathHandler{
           title: "Waypoint"
         })
         marker.setMap(self.map);
-        userAction("http://api.opentripmap.com/0.1/en/places/xid/" + self.waypoints[i].id + "?apikey=" +otmApiKey).then(function(locationData){
+        userAction("https://api.opentripmap.com/0.1/en/places/xid/" + self.waypoints[i].id + "?apikey=" +otmApiKey).then(function(locationData){
           self.markers.push(marker);
           self.createInfoWindow(marker, locationData);
         })
@@ -371,6 +371,7 @@ class PathHandler{
   }
 
   createInfoWindow(marker, locData){
+    console.log(locData)
     let descrip;
     if (locData.wikipedia_extracts == undefined){
       descrip = ""
