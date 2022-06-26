@@ -335,7 +335,8 @@ class PathHandler{
 
   createFinalPath(){
     console.log("creating final path from " + this.start + " to " + this.destination);
-    let waypointNoID = this.waypoints;
+    let waypointNoID = JSON.parse(JSON.stringify(this.waypoints));
+    console.log(waypointNoID);
     for (let i = 0; i < 5; i++){
       userAction("http://api.opentripmap.com/0.1/en/places/xid/" + this.waypoints[i].id + "?apikey=" +otmApiKey).then(function(location){
         console.log(location)
@@ -345,7 +346,8 @@ class PathHandler{
     for (let i = 0; i < waypointNoID.length; i++){
       delete waypointNoID[i].id
     }
-    console.log(waypointNoID);
+    console.log("waypoint no id");
+    console.log(this.waypoints);
     this.directionsService
     .route({
       origin: this.start, //can also take placeId and long/lat
