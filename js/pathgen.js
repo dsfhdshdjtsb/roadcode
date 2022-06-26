@@ -252,6 +252,12 @@ class PathHandler{
         $(".errortext").text("Please fill out all fields")
         return;
       }
+      let distance = distanceTxt.value * 1600;
+      if(distance > 2500 * 1600)
+      {
+        $(".errortext").text("Please enter a distance less than 2500 miles")
+        return;
+      }
 
       $(".loader").fadeIn();
       $(".createBtn").prop("disabled", true);
@@ -265,12 +271,7 @@ class PathHandler{
         this.start += " " + this.originPlace.address_components[i].short_name;
       }
       let startCords = [this.originPlace.geometry.location.lat(), this.originPlace.geometry.location.lng()]
-      let distance = distanceTxt.value * 1600;
-      if(distance > 2500 * 1600)
-      {
-        $(".errortext").text("Please enter a distance less than 2500 miles")
-        return;
-      }
+
       this.kinds = this.handleCheckboxes();
       if (this.kinds == 1){
         return;
@@ -421,13 +422,14 @@ class PathHandler{
         shouldFocus: false,
       })
       infoWindow.setMap(self.map)
-      self.closeInfoWindows();
     })
 
 
     this.map.addListener("click", ()=>{
       this.closeInfoWindows();
     })
+    $(".loader").fadeOut();
+    $(".createBtn").prop("disabled", false);
   }
 
   closeInfoWindows(){
@@ -465,8 +467,6 @@ class PathHandler{
     })
     .then((response) => {
       this.directionsRenderer.setDirections(response); //if direction service receives a response, then render the directions given
-      $(".loader").fadeOut();
-      $(".createBtn").prop("disabled", false);
       this.createMarkers();
     })
     .catch((e) => {
