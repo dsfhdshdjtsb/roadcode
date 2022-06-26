@@ -206,6 +206,7 @@ class PathHandler{
   start;
   kinds;
   map;
+  markers;
   destination;
   waypoints;
   createPathBtn;
@@ -219,6 +220,7 @@ class PathHandler{
     })
     this.directionsRenderer.setMap(map);
     this.map = map;
+    this.markers=[];
     this.waypoints = [];
     this.originPlace = "";
     this.setupClickListener();
@@ -244,7 +246,7 @@ class PathHandler{
 
     this.createPathBtn.addEventListener("click", () => {
 
-      if (this.originPlace == undefined || distanceTxt.value == ""){
+      if (this.originPlace == "" || distanceTxt.value == "" || this.originPlace.address_components.length == undefined){
         $(".errortext").text("Please fill out all fields")
         return;
       }
@@ -344,18 +346,22 @@ class PathHandler{
   }
 
   createMarkers(){
-    let markers = []
+    var self = this;
     for (let i = 0; i < this.waypoints.length; i++){
       let marker = new google.maps.Marker({
         position: this.waypoints[i].latlng,
-        title: "penis"
+        title: "Waypoint"
       })
       marker.setMap(this.map);
-      markers.push(marker);
-      // userAction("http://api.opentripmap.com/0.1/en/places/xid/" + this.waypoints[i].id + "?apikey=" +otmApiKey).then(function(event){
-      //   console.log(event)
-      // })
+      userAction("http://api.opentripmap.com/0.1/en/places/xid/" + this.waypoints[i].id + "?apikey=" +otmApiKey).then(function(locationData){
+        self.markers.push({marker: locationData});
+      })
     }
+    this.createInfoWindows();
+  }
+
+  createInfoWindows(){
+    console.log(this.markers[0])
   }
 
   createFinalPath(){
