@@ -196,7 +196,7 @@ function initMap() {
         center: { lat: 36.967243, lng: -99.771556 }, //center of US
         zoom: 5,
     });
-    var test = new PathHandler(map);
+    new PathHandler(map, autocomplete);
 };
 
 class PathHandler{
@@ -209,15 +209,35 @@ class PathHandler{
   constructor(map){
     this.directionsRenderer = new google.maps.DirectionsRenderer({draggable: true});
     this.directionsService = new google.maps.DirectionsService();
+    const autocomplete = new google.maps.places.Autocomplete($("#autocomplete")[0] ,{
+      componentRestrictions: {'country' : ['US']},
+      fields: ['address_components', 'adr_address', 'geometry', 'place_id']
+    })
+    console.log(this.autocomplete)
     this.directionsRenderer.setMap(map);
     this.waypoints;
     this.setupClickListener();
+    this.setupPlaceChangedListener(autocomplete)
+  }
+
+  setupPlaceChangedListener(autocomplete) {
+    autocomplete.addListener("place_changed", () => {
+      const place = autocomplete.getPlace();
+      //verifies if place is a real place
+      if (!place.geometry) {
+        window.alert("Please select an option from the dropdown list.");
+        return;
+      }
+      //place object contains all of the data do what u want with it
+      console.log(place.place_id)
+
+    });
   }
 
   setupClickListener() {
-    const btn1 = $("#coolBtn")[0];
+    const createPathBtn = $(".createBtn")[0];
 
-    btn1.addEventListener("click", () => {
+    createPathBtn.addEventListener("click", () => {
       console.log("Start button pressed!")
       // let start = "33.6846, -117.8265"
       this.start = "Irvine, Ca"
@@ -252,6 +272,17 @@ class PathHandler{
         }
     }
     });
+
+    // autocomplete.addEventListener('place_changed', function(){
+    //   let place = autocomplete.getPlace();
+    //   console.log(place)
+
+    //   if (!place.geometry){
+    //     $("#autocomplete").attr('placeholder', "Enter a place");
+    //   }else{
+    //     console.log(place.name)
+    //   }
+    // });
   }
 
   generateShortPath(start, end){

@@ -9,5 +9,5 @@ $(".menuIcon").click(()=>{
 
 $(".slideIcon").on("click", function(e){
     $(this).toggleClass("rotated")
-    $(this).next().children().slideToggle();
+    $(this).parent().children().next().children().slideToggle();
 })

@@ -13,75 +13,77 @@
 </head>
 <body>
   <div class="container">
-    <div class="topbar">
-      <button class="createBtn btn" id="coolBtn">Create Path</button>
-    </div>
-    <div class="filterbar">
-        <div class="archCheckMenu checkMenu">
-          <label class="titleLabel"><input value="architecture" id="archTitle" type="checkbox"></input>Architectural</label><i class="fa-solid fa-angle-up slideIcon fa-sm rotated"></i>
-          <ul class="ulCheck">
-            <label class="checkOption" for="bridgeCheck"><input value="bridges" id="bridgeCheck" type="checkbox">Bridges</label>
-            <label class="checkOption" for="histArchCheck"><input value="historic_architecture" id="histArchCheck" type="checkbox"></input>Historic Architecture</label>
-            <label class="checkOption" for="towersCheck"><input value="towers" id="towersCheck" type="checkbox">Towers</label>
-            <label class="checkOption" for="lightCheck"><input value="lighthouses" id="lightCheck" type="checkbox">Lighthouses</label>
-            <label class="checkOption" for="skyCheck"><input value="skyscrapers" id="skyCheck" type="checkbox">Skyscrapers</label>
-          </ul>
+    <div class="navbar">
+        <div class="options">
+          <button class="createBtn btn">Create Path</button>
+          <input id="autocomplete" type="text" placeholder="Enter a place">
         </div>
-        <div class="culturalCheckMenu checkMenu">
-          <label class="titleLabel"><input value="cultural" id="culturalTitle" type="checkbox"></input>Cultural</label><i class="fa-solid fa-angle-up slideIcon fa-sm rotated"></i>
-          <ul class="ulCheck">
-            <label class="checkOption" for="museumCheck"><input value="museums" id="museumCheck" type="checkbox">Museums</label>
-            <label class="checkOption" for="theatreCheck"><input value="theatres_and_entertainments" id="theatreCheck" type="checkbox">Theatres</label>
-            <label class="checkOption" for="urbanCheck"><input value="urban_environment" id="urbanCheck" type="checkbox">Urban Environnment</label>
-          </ul>
+        <div class="filters">
+          <div class="archCheckMenu checkMenu">
+            <label class="titleLabel"><input class="titleCheck" value="architecture" id="archTitle" type="checkbox">Architectural</label><i class="fa-solid fa-angle-up slideIcon fa-sm rotated"></i>
+            <ul class="ulCheck">
+              <label class="checkOption" for="bridgeCheck"><input value="bridges" id="bridgeCheck" type="checkbox">Bridges</label>
+              <label class="checkOption" for="histArchCheck"><input value="historic_architecture" id="histArchCheck" type="checkbox">Historic Architecture</label>
+              <label class="checkOption" for="towersCheck"><input value="towers" id="towersCheck" type="checkbox">Towers</label>
+              <label class="checkOption" for="lightCheck"><input value="lighthouses" id="lightCheck" type="checkbox">Lighthouses</label>
+              <label class="checkOption" for="skyCheck"><input value="skyscrapers" id="skyCheck" type="checkbox">Skyscrapers</label>
+            </ul>
+          </div>
+          <div class="culturalCheckMenu checkMenu">
+            <label class="titleLabel"><input value="cultural" id="culturalTitle" type="checkbox">Cultural</label><i class="fa-solid fa-angle-up slideIcon fa-sm rotated"></i>
+            <ul class="ulCheck">
+              <label class="checkOption" for="museumCheck"><input value="museums" id="museumCheck" type="checkbox">Museums</label>
+              <label class="checkOption" for="theatreCheck"><input value="theatres_and_entertainments" id="theatreCheck" type="checkbox">Theatres</label>
+              <label class="checkOption" for="urbanCheck"><input value="urban_environment" id="urbanCheck" type="checkbox">Urban Environnment</label>
+            </ul>
+          </div>
+          <div class="historicCheckMenu checkMenu">
+            <label class="titleLabel"><input value="historic" id="historicTitle" type="checkbox">Historical</label><i class="fa-solid fa-angle-up slideIcon fa-sm rotated"></i>
+            <ul class="ulCheck">
+              <label class="checkOption" for="archaeoCheck"><input value="archaeology" id="archaeoCheck" type="checkbox">Archaeology</label>
+              <label class="checkOption" for="burialCheck"><input value="burial_places" id="burialCheck" type="checkbox">Burials Places</label>
+              <label class="checkOption" for="fortCheck"><input value="fortifications" id="fortCheck" type="checkbox">Fortifications</label>
+              <label class="checkOption" for="historicPlaceCheck"><input value="historical_places" id="historicPlaceCheck" type="checkbox">Historical Sites</label>
+              <label class="checkOption" for="historicAttractCheck"><input value="historic_object" id="historicAttractCheck" type="checkbox">Historic Attractions</label>
+              <label class="checkOption" for="monumentCheck"><input value="monuments_and_memorials" id="monumentCheck" type="checkbox">Monuments and Memorials</label>
+              
+            </ul>
+          </div>
+          <div class="naturalCheckMenu checkMenu">
+            <label class="titleLabel" id="natural"><input value="natural" id="naturalTitle" type="checkbox">Natural</label><i class="fa-solid fa-angle-up slideIcon fa-sm rotated"></i>
+            <ul class="ulCheck">
+              <label class="checkOption" for="beachCheck"><input value="beaches" id="beachCheck" type="checkbox">Beaches</label>
+              <label class="checkOption" for="viewCheck"><input value="view_points" id="viewCheck" type="checkbox">View Points</label>
+              <label class="checkOption" for="geoFormCheck"><input value="geological_formations" id="geoFormCheck" type="checkbox">Geological Formations</label>
+              <label class="checkOption" for="glacierCheck"><input value="glaciers" id="glacierCheck" type="checkbox">Glaciers</label>
+              <label class="checkOption" for="islandCheck"><input value="islands" id="islandCheck" type="checkbox">Islands</label>
+              <label class="checkOption" for="springCheck"><input value="natural_springs" id="springCheck" type="checkbox">Natural Springs</label>
+              <label class="checkOption" for="natureCheck"><input value="nature_reserves" id="natureCheck" type="checkbox">Nature Reserves</label>
+              <label class="checkOption" for="waterCheck"><input value="water" id="waterCheck" type="checkbox">Bodies of Water</label>
+            </ul>
+          </div>
+          <div class="sportCheckMenu checkMenu">
+            <label class="titleLabel" id="sport"><input value="sport" id="sportTitle" type="checkbox">Sports</label><i class="fa-solid fa-angle-up slideIcon fa-sm rotated"></i>
+            <ul class="ulCheck">
+              <label class="checkOption" for="climbingCheck"><input value="climbing" id="climbingCheck" type="checkbox">Climbing</label>
+              <label class="checkOption" for="divingCheck"><input value="diving" id="divingCheck" type="checkbox">Diving</label>
+              <label class="checkOption" for="kiteCheck"><input value="kitesurfing" id="kiteCheck" type="checkbox">Kitesurfing</label>
+              <label class="checkOption" for="stadiumCheck"><input value="stadiums" id="stadiumCheck" type="checkbox">Stadiums</label>
+              <label class="checkOption" for="surfCheck"><input value="surfing" id="surfCheck" type="checkbox">Surfing</label>
+              <label class="checkOption" for="winterCheck"><input value="winter_sports" id="winterCheck" type="checkbox">Winter Sports</label>
+            </ul>
+          </div>
+          <div class="amusementCheckMenu checkMenu">
+          <label class="titleLabel" id="amusements"> <input value="amusements" id="amusementTitle" type="checkbox">Amusement</label><i class="fa-solid fa-angle-up slideIcon fa-sm rotated"></i>
+            <ul class="ulCheck">
+              <label class="checkOption" for="parkCheck"><input value="amusement_parks" id="parkCheck" type="checkbox">Amusement Parks</label>
+              <label class="checkOption" for="ferrisCheck"><input value="ferris_wheels" id="ferrisCheck" type="checkbox">Ferris Wheels</label>
+              <label class="checkOption" for="miniCheck"><input value="miniature_parks" id="miniCheck" type="checkbox">Miniature Parks</label>
+              <label class="checkOption" for="rollerCheck"><input value="roller_coasters" id="rollerCheck" type="checkbox">Roller Coasters</label>
+              <label class="checkOption" for="waterParkCheck"><input value="water_parks" id="waterParkCheck" type="checkbox">Water Parks</label>
+            </ul>
+          </div>
         </div>
-        <div class="historicCheckMenu checkMenu">
-          <label class="titleLabel"><input value="historic" id="historicTitle" type="checkbox"></input>Historical</label><i class="fa-solid fa-angle-up slideIcon fa-sm rotated"></i>
-          <ul class="ulCheck">
-            <label class="checkOption" for="archaeoCheck"><input value="archaeology" id="archaeoCheck" type="checkbox">Archaeology</label>
-            <label class="checkOption" for="burialCheck"><input value="burial_places" id="burialCheck" type="checkbox">Burials Places</label>
-            <label class="checkOption" for="fortCheck"><input value="fortifications" id="fortCheck" type="checkbox">Fortifications</label>
-            <label class="checkOption" for="historicPlaceCheck"><input value="historical_places" id="historicPlaceCheck" type="checkbox">Historical Sites</label>
-            <label class="checkOption" for="historicAttractCheck"><input value="historic_object" id="historicAttractCheck" type="checkbox">Historic Attractions</label>
-            <label class="checkOption" for="monumentCheck"><input value="monuments_and_memorials" id="monumentCheck" type="checkbox">Monuments and Memorials</label>
-            
-          </ul>
-        </div>
-        <div class="naturalCheckMenu checkMenu">
-          <label class="titleLabel" id="natural"><input value="natural" id="naturalTitle" type="checkbox"></input>Natural</label><i class="fa-solid fa-angle-up slideIcon fa-sm rotated"></i>
-          <ul class="ulCheck">
-            <label class="checkOption" for="beachCheck"><input value="beaches" id="beachCheck" type="checkbox">Beaches</label>
-            <label class="checkOption" for="viewCheck"><input value="view_points" id="viewCheck" type="checkbox">View Points</label>
-            <label class="checkOption" for="geoFormCheck"><input value="geological_formations" id="geoFormCheck" type="checkbox">Geological Formations</label>
-            <label class="checkOption" for="glacierCheck"><input value="glaciers" id="glacierCheck" type="checkbox">Glaciers</label>
-            <label class="checkOption" for="islandCheck"><input value="islands" id="islandCheck" type="checkbox">Islands</label>
-            <label class="checkOption" for="springCheck"><input value="natural_springs" id="springCheck" type="checkbox">Natural Springs</label>
-            <label class="checkOption" for="natureCheck"><input value="nature_reserves" id="natureCheck" type="checkbox">Nature Reserves</label>
-            <label class="checkOption" for="waterCheck"><input value="water" id="waterCheck" type="checkbox">Bodies of Water</label>
-          </ul>
-        </div>
-        <div class="sportCheckMenu checkMenu">
-          <label class="titleLabel" id="sport"><input value="sport" id="sportTitle" type="checkbox"></input>Sports</label><i class="fa-solid fa-angle-up slideIcon fa-sm rotated"></i>
-          <ul class="ulCheck">
-            <label class="checkOption" for="climbingCheck"><input value="climbing" id="climbingCheck" type="checkbox">Climbing</label>
-            <label class="checkOption" for="divingCheck"><input value="diving" id="divingCheck" type="checkbox">Diving</label>
-            <label class="checkOption" for="kiteCheck"><input value="kitesurfing" id="kiteCheck" type="checkbox">Kitesurfing</label>
-            <label class="checkOption" for="stadiumCheck"><input value="stadiums" id="stadiumCheck" type="checkbox">Stadiums</label>
-            <label class="checkOption" for="surfCheck"><input value="surfing" id="surfCheck" type="checkbox">Surfing</label>
-            <label class="checkOption" for="winterCheck"><input value="winter_sports" id="winterCheck" type="checkbox">Winter Sports</label>
-          </ul>
-        </div>
-        <div class="amusementCheckMenu checkMenu">
-         <label class="titleLabel" id="amusements"> <input value="amusements" id="amusementTitle" type="checkbox"></input>Amusement</label><i class="fa-solid fa-angle-up slideIcon fa-sm rotated"></i>
-          <ul class="ulCheck">
-            <label class="checkOption" for="parkCheck"><input value="amusement_parks" id="parkCheck" type="checkbox">Amusement Parks</label>
-            <label class="checkOption" for="ferrisCheck"><input value="ferris_wheels" id="ferrisCheck" type="checkbox">Ferris Wheels</label>
-            <label class="checkOption" for="miniCheck"><input value="miniature_parks" id="miniCheck" type="checkbox">Miniature Parks</label>
-            <label class="checkOption" for="rollerCheck"><input value="roller_coasters" id="rollerCheck" type="checkbox">Roller Coasters</label>
-            <label class="checkOption" for="waterParkCheck"><input value="water_parks" id="waterParkCheck" type="checkbox">Water Parks</label>
-          </ul>
-        </div>
-
     </div>
     <div class="btn menuIcon"><i class="fa-solid fa-bars"></i></div>
   </div>

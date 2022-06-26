@@ -22,9 +22,7 @@ html, body {
 }
 
 .createBtn{
-  padding: 5%;
-  position:absolute;
-  top: 0;
+  padding: 10px;
 }
 
 .menuIcon{
@@ -128,6 +126,10 @@ input[type="checkbox"]:checked::before {
 }
 
 
+#autocomplete{
+  width: 200px;
+}
+
 .slideIcon{
   float: right;
   margin: 15px 20px 0 0;
@@ -137,15 +139,26 @@ input[type="checkbox"]:checked::before {
   transition: transform 0.5s;
 }
 
-.filterbar{
+.navbar{
   font-family: "Raleway", sans-serif;
   font-size:1rem;
-  overflow-y:overlay;
-  height: 100vh;
   height: 100vh;
   padding: 6% 0 0 6%;
   width: 330px;
   background-color: white;
+}
+
+.filters{
+  overflow-y:overlay;
+  position: absolute; 
+  bottom: 0;
+  height: 55vh;
+}
+
+.options{
+  margin: 10px;
+  width: 260px;
+  height: 35vh;
 }
 
 .container{
