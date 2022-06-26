@@ -52,7 +52,7 @@ async function genDestinationPoint(lat, lon, radius, kinds)
         console.log("Valid destination found at coordinates" + attractions.features[0].geometry.coordinates);
         return attractions.features[0].geometry.coordinates
     }
-    alert("could not find a good destination point")
+    $(".errortext").text("Could not find a good destination point, please try again");
     return false;
     
 }
@@ -228,7 +228,7 @@ class PathHandler{
       const place = autocomplete.getPlace();
       //verifies if place is a real place
       if (!place.geometry) {
-        window.alert("Please select an option from the dropdown list.");
+        $(".errortext").text("Please select an option from the dropdown list");
       }else{
         console.log(place)
         this.originPlace=place;
@@ -241,9 +241,13 @@ class PathHandler{
     const distanceTxt = $("#distanceTxt")[0];
 
     this.createPathBtn.addEventListener("click", () => {
-      
+
+      if (this.originPlace == undefined || distanceTxt.value == ""){
+        $(".errortext").text("Please fill out all fields")
+        return;
+      }
       $(".loader").fadeIn();
-      // let start = "33.6846, -117.8265"
+      $(".createBtn").prop("disabled", true);
       this.start = ""
       for (let i=0; i<this.originPlace.address_components.length; i++){
         this.start += " " + this.originPlace.address_components[i].short_name;
@@ -252,8 +256,7 @@ class PathHandler{
       let distance = distanceTxt.value * 1600;
       this.kinds = this.handleCheckboxes();
       if (this.kinds == 1){
-        alert("no filters selected")
-        return 1;
+        return;
       }
       var self = this
       let counter = 0
@@ -376,7 +379,8 @@ class PathHandler{
       //this.createMarkers();
     })
     .catch((e) => {
-      
+      $(".loader").fadeOut();
+      $(".createBtn").prop("disabled", false);
       console.log("directions failed")    
       this.createPathBtn.dispatchEvent(new Event("click"));
     }

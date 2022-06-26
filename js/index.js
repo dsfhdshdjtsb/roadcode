@@ -1,3 +1,5 @@
+$(".loader").hide();
+
 $('.titleCheck').change(function() {
     if($(this).is(":checked")){
         $(this).parent().siblings().children().children().prop('checked', true);
