@@ -165,6 +165,7 @@ async function genWaypoints(waypointList, num, kinds){
             if(address.plus_code.compound_code != undefined)
             {
               console.log("Pushing following address to list" + address.plus_code.compound_code)
+              console.log(shuffled[j])
               locationList.push({location: address.plus_code.compound_code})
             }
           }
