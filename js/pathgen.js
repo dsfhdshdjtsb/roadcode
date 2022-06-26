@@ -52,7 +52,7 @@ async function genDestinationPoint(lat, lon, radius, kinds)
         console.log("Valid destination found at coordinates" + attractions.features[0].geometry.coordinates);
         return attractions.features[0].geometry.coordinates
     }
-    alert("could not find a good destination point")
+    $(".errortext").text("Could not find a good destination point, please try again");
     return false;
     
 }
@@ -379,6 +379,14 @@ class PathHandler{
     .catch((e) => {
       $(".errortext").text("Directions request failed, try again"); //else no response, leave error message
     })
+    .catch((e) => {
+      
+      $(".errortext").text("Directions request failed, try again");
+      console.log("directions failed")    
+      createPathBtn.dispatchEvent(new Event("click"));
+    }
+    ); //else no response, leave error message
+    
   }
 
 }
