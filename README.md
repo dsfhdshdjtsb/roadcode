@@ -16,8 +16,9 @@ Road code is REVOLUTIONARY(maybe) program made to make planning roadtrips easier
 1. go to https://monkfish-app-oh3nw.ondigitalocean.app/ 😏
 ![image](https://user-images.githubusercontent.com/66652245/175797303-750f2b63-616e-4dd7-b747-a85511991cb9.png)
 2. input your starting location, the distance you want to travel, and select what kind of places interest you.
-3. ![image](https://user-images.githubusercontent.com/66652245/175808102-97b07b51-d229-4a7d-9b60-bbf81ca012a9.png)
-4. click CREATE PATH to generate a UNIQUE and PERSONALLIZED road trip!
+ ![image](https://user-images.githubusercontent.com/66652245/175808102-97b07b51-d229-4a7d-9b60-bbf81ca012a9.png)
+3. click CREATE YOUR ADVENTURE to generate a UNIQUE and PERSONALLIZED road trip!
+![image](https://user-images.githubusercontent.com/66652245/175808167-3ad7dc81-dca8-4498-b5bb-06e92045bb1c.png)
 
 
 
