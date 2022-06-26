@@ -227,7 +227,7 @@ class PathHandler{
       const place = autocomplete.getPlace();
       //verifies if place is a real place
       if (!place.geometry) {
-        window.alert("Please select an option from the dropdown list.");
+        $(".errortext").text("Please select an option from the dropdown list");
       }else{
         console.log(place)
         this.originPlace=place;
@@ -240,9 +240,14 @@ class PathHandler{
     const distanceTxt = $("#distanceTxt")[0];
 
     createPathBtn.addEventListener("click", () => {
-      
+      $(".errortext").text("")
+
+      if (this.originPlace == undefined || distanceTxt.value == ""){
+        $(".errortext").text("Please fill out all fields")
+        return;
+      }
       $(".loader").fadeIn();
-      // let start = "33.6846, -117.8265"
+      $(".createBtn").prop("disabled", true);
       this.start = ""
       for (let i=0; i<this.originPlace.address_components.length; i++){
         this.start += " " + this.originPlace.address_components[i].short_name;
@@ -251,8 +256,7 @@ class PathHandler{
       let distance = distanceTxt.value * 1600;
       this.kinds = this.handleCheckboxes();
       if (this.kinds == 1){
-        alert("no filters selected")
-        return 1;
+        return;
       }
       var self = this
       let counter = 0
@@ -263,7 +267,7 @@ class PathHandler{
             {
               if(output == undefined || output.plus_code == undefined || output.plus_code.compound_code == undefined)
               {
-                alert("could not find valid address, please try again")
+                $(".errortext").text("Server error. Please try again.");
                 return;
               }
               console.log(output)
@@ -368,10 +372,13 @@ class PathHandler{
     })
     .then((response) => {
       this.directionsRenderer.setDirections(response); //if direction service receives a response, then render the directions given
-      this.createMarkers();
+      $(".loader").fadeOut();
+      $(".createBtn").prop("disabled", false);
+      // this.createMarkers();
     })
-    .catch((e) => window.alert("Directions request failed, please try again")); //else no response, leave error message
-    
+    .catch((e) => {
+      $(".errortext").text("Directions request failed, try again"); //else no response, leave error message
+    })
   }
 
 }

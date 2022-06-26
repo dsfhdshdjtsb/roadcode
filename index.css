@@ -119,7 +119,6 @@ input[type="checkbox"]:checked::before {
   animation: spin 2s linear infinite;
   position: relative;
   top: 8px;
-  visibility: hidden;
   left: 20px;
 }
 
@@ -204,9 +203,13 @@ input[type="checkbox"]:checked::before {
 }
 
 
+.btn:disabled {
+  cursor: default;
+  background-color: rgb(57, 251, 176);
+}
 
-.btn:hover {
-  background-color: rgb(56, 228, 162);
+.btn:hover:enabled {
+  background-color: rgb(47, 188, 134);
 }
 
 .rotated {
