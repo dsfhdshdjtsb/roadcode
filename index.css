@@ -126,7 +126,7 @@ input[type="checkbox"]:checked::before {
 }
 
 
-#autocomplete{
+.textInput{
   width: 200px;
 }
 

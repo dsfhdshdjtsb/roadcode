@@ -16,7 +16,8 @@
     <div class="navbar">
         <div class="options">
           <button class="createBtn btn">Create Path</button>
-          <input id="autocomplete" type="text" placeholder="Enter a place">
+          <input id="distanceTxt" class="textInput" type="text" placeholder="Enter wanted distance in miles">
+          <input id="autocomplete" class="textInput" type="text" placeholder="Enter starting location">
         </div>
         <div class="filters">
           <div class="archCheckMenu checkMenu">
@@ -30,7 +31,7 @@
             </ul>
           </div>
           <div class="culturalCheckMenu checkMenu">
-            <label class="titleLabel"><input value="cultural" id="culturalTitle" type="checkbox">Cultural</label><i class="fa-solid fa-angle-up slideIcon fa-sm rotated"></i>
+            <label class="titleLabel"><input class="titleCheck" value="cultural" id="culturalTitle" type="checkbox">Cultural</label><i class="fa-solid fa-angle-up slideIcon fa-sm rotated"></i>
             <ul class="ulCheck">
               <label class="checkOption" for="museumCheck"><input value="museums" id="museumCheck" type="checkbox">Museums</label>
               <label class="checkOption" for="theatreCheck"><input value="theatres_and_entertainments" id="theatreCheck" type="checkbox">Theatres</label>
@@ -38,7 +39,7 @@
             </ul>
           </div>
           <div class="historicCheckMenu checkMenu">
-            <label class="titleLabel"><input value="historic" id="historicTitle" type="checkbox">Historical</label><i class="fa-solid fa-angle-up slideIcon fa-sm rotated"></i>
+            <label class="titleLabel"><input class="titleCheck" value="historic" id="historicTitle" type="checkbox">Historical</label><i class="fa-solid fa-angle-up slideIcon fa-sm rotated"></i>
             <ul class="ulCheck">
               <label class="checkOption" for="archaeoCheck"><input value="archaeology" id="archaeoCheck" type="checkbox">Archaeology</label>
               <label class="checkOption" for="burialCheck"><input value="burial_places" id="burialCheck" type="checkbox">Burials Places</label>
@@ -50,7 +51,7 @@
             </ul>
           </div>
           <div class="naturalCheckMenu checkMenu">
-            <label class="titleLabel" id="natural"><input value="natural" id="naturalTitle" type="checkbox">Natural</label><i class="fa-solid fa-angle-up slideIcon fa-sm rotated"></i>
+            <label class="titleLabel" id="natural"><input class="titleCheck" value="natural" id="naturalTitle" type="checkbox">Natural</label><i class="fa-solid fa-angle-up slideIcon fa-sm rotated"></i>
             <ul class="ulCheck">
               <label class="checkOption" for="beachCheck"><input value="beaches" id="beachCheck" type="checkbox">Beaches</label>
               <label class="checkOption" for="viewCheck"><input value="view_points" id="viewCheck" type="checkbox">View Points</label>
@@ -63,7 +64,7 @@
             </ul>
           </div>
           <div class="sportCheckMenu checkMenu">
-            <label class="titleLabel" id="sport"><input value="sport" id="sportTitle" type="checkbox">Sports</label><i class="fa-solid fa-angle-up slideIcon fa-sm rotated"></i>
+            <label class="titleLabel" id="sport"><input class="titleCheck" value="sport" id="sportTitle" type="checkbox">Sports</label><i class="fa-solid fa-angle-up slideIcon fa-sm rotated"></i>
             <ul class="ulCheck">
               <label class="checkOption" for="climbingCheck"><input value="climbing" id="climbingCheck" type="checkbox">Climbing</label>
               <label class="checkOption" for="divingCheck"><input value="diving" id="divingCheck" type="checkbox">Diving</label>
@@ -74,7 +75,7 @@
             </ul>
           </div>
           <div class="amusementCheckMenu checkMenu">
-          <label class="titleLabel" id="amusements"> <input value="amusements" id="amusementTitle" type="checkbox">Amusement</label><i class="fa-solid fa-angle-up slideIcon fa-sm rotated"></i>
+          <label class="titleLabel" id="amusements"> <input class="titleCheck" value="amusements" id="amusementTitle" type="checkbox">Amusement</label><i class="fa-solid fa-angle-up slideIcon fa-sm rotated"></i>
             <ul class="ulCheck">
               <label class="checkOption" for="parkCheck"><input value="amusement_parks" id="parkCheck" type="checkbox">Amusement Parks</label>
               <label class="checkOption" for="ferrisCheck"><input value="ferris_wheels" id="ferrisCheck" type="checkbox">Ferris Wheels</label>

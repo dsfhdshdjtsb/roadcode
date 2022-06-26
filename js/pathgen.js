@@ -202,8 +202,9 @@ function initMap() {
 class PathHandler{
   directionsRenderer;
   directionsService;
+  originPlace; //output of autocomplete
   start;
-  kinds
+  kinds;
   destination
   waypoints;
   
@@ -212,13 +213,13 @@ class PathHandler{
     this.directionsService = new google.maps.DirectionsService();
     const autocomplete = new google.maps.places.Autocomplete($("#autocomplete")[0] ,{
       componentRestrictions: {'country' : ['US']},
-      fields: ['address_components', 'adr_address', 'geometry', 'place_id']
+      fields: ['address_components', 'geometry']
     })
-    console.log(this.autocomplete)
     this.directionsRenderer.setMap(map);
     this.waypoints;
+    this.originPlace = "";
     this.setupClickListener();
-    this.setupPlaceChangedListener(autocomplete)
+    this.setupPlaceChangedListener(autocomplete);
   }
 
   setupPlaceChangedListener(autocomplete) {
@@ -227,23 +228,26 @@ class PathHandler{
       //verifies if place is a real place
       if (!place.geometry) {
         window.alert("Please select an option from the dropdown list.");
-        return;
+      }else{
+        console.log(place)
+        this.originPlace=place;
       }
-      //place object contains all of the data do what u want with it
-      console.log(place.place_id)
-
     });
   }
 
   setupClickListener() {
     const createPathBtn = $(".createBtn")[0];
+    const distanceTxt = $("#distanceTxt")[0];
 
     createPathBtn.addEventListener("click", () => {
       console.log("Start button pressed!")
       // let start = "33.6846, -117.8265"
-      this.start = "Irvine, Ca"
-      let startCords = [33.6846, -117.8265]
-      let distance = 2000000
+      this.start = ""
+      for (let i=0; i<this.originPlace.address_components.length; i++){
+        this.start += " " + this.originPlace.address_components[i].short_name;
+      }
+      let startCords = [this.originPlace.geometry.location.lat(), this.originPlace.geometry.location.lng()]
+      let distance = distanceTxt.value * 1600;
       var self = this
       this.kinds = ["historic", "churches"]
 
