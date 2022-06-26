@@ -5,7 +5,7 @@
 **INTRODUCING...**
 
 
-![image](https://user-images.githubusercontent.com/66652245/175797373-8f7052d6-9219-409b-89ad-04b24f92eaaa.png)
+![image](https://user-images.githubusercontent.com/66652245/175797392-33126540-80de-468f-8449-4179a53b0b64.gif)
 
 # Road Code 🚗🚗🚗
 Road code is REVOLUTIONARY(maybe) program made to make planning roadtrips easier!
