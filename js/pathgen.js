@@ -263,7 +263,8 @@ class PathHandler{
             {
               if(output == undefined || output.plus_code == undefined || output.plus_code.compound_code == undefined)
               {
-                throw "could not find address"
+                alert("could not find valid address, please try again")
+                return;
               }
               console.log(output)
               self.destination = output.plus_code.compound_code
@@ -343,11 +344,19 @@ class PathHandler{
 
   createFinalPath(){
     console.log("creating final path from " + this.start + " to " + this.destination);
-    let waypointNoID = this.waypoints;
+    let waypointNoID = JSON.parse(JSON.stringify(this.waypoints));
+    console.log(waypointNoID);
+    for (let i = 0; i < 5; i++){
+      userAction("http://api.opentripmap.com/0.1/en/places/xid/" + this.waypoints[i].id + "?apikey=" +otmApiKey).then(function(location){
+        console.log(location)
+        console.log(location.wikipedia)
+      })
+    }
     for (let i = 0; i < waypointNoID.length; i++){
       delete waypointNoID[i].id
     }
-
+    console.log("waypoint no id");
+    console.log(this.waypoints);
     this.directionsService
     .route({
       origin: this.start, //can also take placeId and long/lat
