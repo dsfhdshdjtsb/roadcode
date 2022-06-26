@@ -376,11 +376,12 @@ class PathHandler{
     })
     .then((response) => {
       this.directionsRenderer.setDirections(response); //if direction service receives a response, then render the directions given
+      $(".loader").fadeOut();
+      $(".createBtn").prop("disabled", false);
       //this.createMarkers();
     })
     .catch((e) => {
-      $(".loader").fadeOut();
-      $(".createBtn").prop("disabled", false);
+
       console.log("directions failed")    
       this.createPathBtn.dispatchEvent(new Event("click"));
     }
