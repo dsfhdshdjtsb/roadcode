@@ -345,13 +345,41 @@ class PathHandler{
 
   createMarkers(){
     let markers = []
+
+    var i = 0;                  
+    var self = this
+    function myLoop() {         
+      setTimeout(function() {   
+        let marker = new google.maps.Marker({
+          position: self.waypoints[i].latlng,
+          title: "penis"
+        })
+        marker.setMap(self.map);
+        markers.push(marker);
+          userAction("http://api.opentripmap.com/0.1/en/places/xid/" + self.waypoints[i].id + "?apikey=" + otmApiKey).then(function(event){
+          console.log(event)
+          })
+        i++;                    
+        if (i < self.waypoints.length) {           
+          myLoop();            
+        }                      
+      }, 250)
+    }
+
+    myLoop();    
     for (let i = 0; i < this.waypoints.length; i++){
-      let marker = new google.maps.Marker({
-        position: this.waypoints[i].latlng,
-        title: "penis"
-      })
-      marker.setMap(this.map);
-      markers.push(marker);
+      // let marker = new google.maps.Marker({
+      //   position: this.waypoints[i].latlng,
+      //   title: "penis"
+      // })
+      // marker.setMap(this.map);
+      // markers.push(marker);
+      // setTimeout(() =>
+      // {
+      //   userAction("http://api.opentripmap.com/0.1/en/places/xid/" + this.waypoints[i].id + "?apikey=" + otmApiKey).then(function(event){
+      //   console.log(event)
+      //   })
+      // }, 500)
       // userAction("http://api.opentripmap.com/0.1/en/places/xid/" + this.waypoints[i].id + "?apikey=" +otmApiKey).then(function(event){
       //   console.log(event)
       // })
