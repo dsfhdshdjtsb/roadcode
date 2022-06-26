@@ -374,7 +374,7 @@ class PathHandler{
       this.directionsRenderer.setDirections(response); //if direction service receives a response, then render the directions given
       $(".loader").fadeOut();
       $(".createBtn").prop("disabled", false);
-      // this.createMarkers();
+      this.createMarkers();
     })
     .catch((e) => {
       $(".errortext").text("Directions request failed, try again"); //else no response, leave error message
