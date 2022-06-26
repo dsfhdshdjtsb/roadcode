@@ -347,21 +347,30 @@ class PathHandler{
 
   createMarkers(){
     var self = this;
-    for (let i = 0; i < this.waypoints.length; i++){
-      let marker = new google.maps.Marker({
-        position: this.waypoints[i].latlng,
-        title: "Waypoint"
-      })
-      marker.setMap(this.map);
-      userAction("http://api.opentripmap.com/0.1/en/places/xid/" + this.waypoints[i].id + "?apikey=" +otmApiKey).then(function(locationData){
-        self.markers.push({marker: locationData});
-      })
+    var i = 0;                  
+    function myLoop() {         
+      setTimeout(function() {   
+        let marker = new google.maps.Marker({
+          position: self.waypoints[i].latlng,
+          title: "Waypoint"
+        })
+        marker.setMap(self.map);
+        userAction("http://api.opentripmap.com/0.1/en/places/xid/" + self.waypoints[i].id + "?apikey=" +otmApiKey).then(function(locationData){
+          self.markers.push({marker: locationData});
+        })
+        i++;                    
+        if (i < self.waypoints.length) {           
+          myLoop();            
+        }                      
+      }, 250)
     }
-    this.createInfoWindows();
+
+      myLoop();    
+      this.createInfoWindows();
   }
 
   createInfoWindows(){
-    console.log(this.markers[0])
+    console.log(this.markers)
   }
 
   createFinalPath(){
