@@ -13,10 +13,12 @@
 </head>
 <body>
   <div class="container">
-    <div class="navbar">
-      <div class="checkContainer">
+    <div class="topbar">
+      <button class="createBtn btn" id="coolBtn">Create Path</button>
+    </div>
+    <div class="filterbar">
         <div class="archCheckMenu checkMenu">
-          <label class="titleCheck"><input value="architecture" id="archTitle" type="checkbox"></input>Architecture</label><i class="fa-solid fa-angle-up slideIcon fa-sm rotated"></i>
+          <label class="titleLabel"><input value="architecture" id="archTitle" type="checkbox"></input>Architectural</label><i class="fa-solid fa-angle-up slideIcon fa-sm rotated"></i>
           <ul class="ulCheck">
             <label class="checkOption" for="bridgeCheck"><input value="bridges" id="bridgeCheck" type="checkbox">Bridges</label>
             <label class="checkOption" for="histArchCheck"><input value="historic_architecture" id="histArchCheck" type="checkbox"></input>Historic Architecture</label>
@@ -26,7 +28,7 @@
           </ul>
         </div>
         <div class="culturalCheckMenu checkMenu">
-          <label class="titleCheck"><input value="cultural" id="culturalTitle" type="checkbox"></input>Cultural</label><i class="fa-solid fa-angle-up slideIcon fa-sm rotated"></i>
+          <label class="titleLabel"><input value="cultural" id="culturalTitle" type="checkbox"></input>Cultural</label><i class="fa-solid fa-angle-up slideIcon fa-sm rotated"></i>
           <ul class="ulCheck">
             <label class="checkOption" for="museumCheck"><input value="museums" id="museumCheck" type="checkbox">Museums</label>
             <label class="checkOption" for="theatreCheck"><input value="theatres_and_entertainments" id="theatreCheck" type="checkbox">Theatres</label>
@@ -34,7 +36,7 @@
           </ul>
         </div>
         <div class="historicCheckMenu checkMenu">
-          <label class="titleCheck"><input value="historic" id="historicTitle" type="checkbox"></input>Historic</label><i class="fa-solid fa-angle-up slideIcon fa-sm rotated"></i>
+          <label class="titleLabel"><input value="historic" id="historicTitle" type="checkbox"></input>Historical</label><i class="fa-solid fa-angle-up slideIcon fa-sm rotated"></i>
           <ul class="ulCheck">
             <label class="checkOption" for="archaeoCheck"><input value="archaeology" id="archaeoCheck" type="checkbox">Archaeology</label>
             <label class="checkOption" for="burialCheck"><input value="burial_places" id="burialCheck" type="checkbox">Burials Places</label>
@@ -46,7 +48,7 @@
           </ul>
         </div>
         <div class="naturalCheckMenu checkMenu">
-          <label class="titleCheck" id="natural"><input value="natural" id="naturalTitle" type="checkbox"></input>Natural</label><i class="fa-solid fa-angle-up slideIcon fa-sm rotated"></i>
+          <label class="titleLabel" id="natural"><input value="natural" id="naturalTitle" type="checkbox"></input>Natural</label><i class="fa-solid fa-angle-up slideIcon fa-sm rotated"></i>
           <ul class="ulCheck">
             <label class="checkOption" for="beachCheck"><input value="beaches" id="beachCheck" type="checkbox">Beaches</label>
             <label class="checkOption" for="viewCheck"><input value="view_points" id="viewCheck" type="checkbox">View Points</label>
@@ -59,7 +61,7 @@
           </ul>
         </div>
         <div class="sportCheckMenu checkMenu">
-          <label class="titleCheck" id="sport"><input value="sport" id="sportTitle" type="checkbox"></input>Sports</label><i class="fa-solid fa-angle-up slideIcon fa-sm rotated"></i>
+          <label class="titleLabel" id="sport"><input value="sport" id="sportTitle" type="checkbox"></input>Sports</label><i class="fa-solid fa-angle-up slideIcon fa-sm rotated"></i>
           <ul class="ulCheck">
             <label class="checkOption" for="climbingCheck"><input value="climbing" id="climbingCheck" type="checkbox">Climbing</label>
             <label class="checkOption" for="divingCheck"><input value="diving" id="divingCheck" type="checkbox">Diving</label>
@@ -70,18 +72,16 @@
           </ul>
         </div>
         <div class="amusementCheckMenu checkMenu">
-         <label class="titleCheck" id="amusements"> <input value="amusements" id="amusementTitle" type="checkbox"></input>Amusements</label><i class="fa-solid fa-angle-up slideIcon fa-sm rotated"></i>
+         <label class="titleLabel" id="amusements"> <input value="amusements" id="amusementTitle" type="checkbox"></input>Amusement</label><i class="fa-solid fa-angle-up slideIcon fa-sm rotated"></i>
           <ul class="ulCheck">
             <label class="checkOption" for="parkCheck"><input value="amusement_parks" id="parkCheck" type="checkbox">Amusement Parks</label>
             <label class="checkOption" for="ferrisCheck"><input value="ferris_wheels" id="ferrisCheck" type="checkbox">Ferris Wheels</label>
-            <label class="checkOption" for="miniCheck"><input value="miniature_parks" id="miniCheck" type="checkbox">Miniautre Parks</label>
+            <label class="checkOption" for="miniCheck"><input value="miniature_parks" id="miniCheck" type="checkbox">Miniature Parks</label>
             <label class="checkOption" for="rollerCheck"><input value="roller_coasters" id="rollerCheck" type="checkbox">Roller Coasters</label>
             <label class="checkOption" for="waterParkCheck"><input value="water_parks" id="waterParkCheck" type="checkbox">Water Parks</label>
           </ul>
         </div>
 
-      </div>
-      <button class="createBtn btn" id="coolBtn">Create Path</button>
     </div>
     <div class="btn menuIcon"><i class="fa-solid fa-bars"></i></div>
   </div>
@@ -96,8 +96,9 @@
 
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-  <script src="js/index.js"></script>
+  <script src="js/pathgen.js"></script>
   <script src="js/animations.js"></script>
+  <script src="js/index.js"></script>
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCTlMIrLbEtYu8K7Kheto9hxaIqWjzOQ8E&callback=initMap&v=weekly&libraries=places" defer></script>
 </body>
 </html>

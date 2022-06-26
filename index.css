@@ -6,6 +6,7 @@ html, body {
   height: 100%;
   margin: 0;
   padding: 0;
+  overflow: hidden;
 }
 
 .btn {
@@ -22,6 +23,8 @@ html, body {
 
 .createBtn{
   padding: 5%;
+  position:absolute;
+  top: 0;
 }
 
 .menuIcon{
@@ -33,22 +36,22 @@ html, body {
   width: 50px;
   box-shadow: none;
   left: 337px;
-  border: 2px white solid;
   border-radius: 0;
 }
 
 .checkMenu{
   background-color: #e0e0e0;
   border-radius: 4px;
-  padding: 10px 5px 5px 5px;
+  width: 260px;
+  padding: 10px 10px 3px 15px;
   margin: 0 0 20px 0;
 }
 
 .checkOption input{
-  margin-right: 0.3rem;
+  margin-right: 0.5rem;
 }
 
-.titleCheck input{
+.titleLabel input{
   margin-right: 0.5rem;
 }
 
@@ -63,30 +66,82 @@ html, body {
 .checkOption{
   display:block;
   white-space: nowrap;
+  font-family: "Nunito", sans-serif;
   margin: 5px 0 0 0;
 }
 
-.titleCheck{
+.titleLabel{
   font-weight: 700;
 }
 
-.checkContainer{
-  font-family: "Raleway", sans-serif;
-  font-size:1rem;
-  overflow-y:auto;
-  width: 300px;
-  height: 100vh;
+input[type="checkbox"] {
+  position: relative;
+  width: 1rem;
+  height: 1rem;
+  top: 5px;
+  color: black;
+  border: 2px solid gray;
+  border-radius: 4px;
+  appearance: none;
+  outline: 0;
+  cursor: pointer;
+  transition: background 175ms cubic-bezier(0.1, 0.1, 0.25, 1);
 }
+input[type="checkbox"]::before { 
+    position: absolute;
+    content: '';
+    display: block;
+    bottom: 1px;
+    left: 3px;
+    width: 4px;
+    height: 10px;
+    border-style: solid;
+    border-color: white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+    opacity: 0;
+  }
+input[type="checkbox"]:checked {
+    color: white;
+    border-color: #4285F4;
+    background: #4285F4;
+  }
+input[type="checkbox"]:checked::before {
+  opacity: 1;
+}
+
+
+/* scroll wheel */
+
+::-webkit-scrollbar {
+  width: 5px;
+}
+::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background-color: #868f92;
+  border-radius: 20px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background-color: #a8bbbf;
+}
+
 
 .slideIcon{
   float: right;
-  margin: 10px 20px 0 0;
+  margin: 15px 20px 0 0;
   -moz-transition: transform 0.5s;
   -webkit-transition: transform 0.5s;
+  cursor: pointer;
   transition: transform 0.5s;
 }
 
-.navbar{
+.filterbar{
+  font-family: "Raleway", sans-serif;
+  font-size:1rem;
+  overflow-y:overlay;
+  height: 100vh;
   height: 100vh;
   padding: 6% 0 0 6%;
   width: 330px;
