@@ -165,7 +165,7 @@ async function genWaypoints(waypointList, num, kinds){
             if(address.plus_code.compound_code != undefined)
             {
               console.log("Pushing following address to list" + address.plus_code.compound_code)
-              locationList.push({location: address.plus_code.compound_code})
+              locationList.push({location: address.plus_code.compound_code, id: shuffled[j].id})
             }
           }
         }
@@ -203,6 +203,7 @@ class PathHandler{
   directionsRenderer;
   directionsService;
   start;
+  kinds
   destination
   waypoints;
   
@@ -244,12 +245,12 @@ class PathHandler{
       let startCords = [33.6846, -117.8265]
       let distance = 2000000
       var self = this
-      let kinds = ["historic", "churches"]
+      this.kinds = ["historic", "churches"]
 
       let counter = 0
       while(counter < 5){
         try{
-          genDestinationPoint(startCords[0], startCords[1], distance, kinds).then(function(point){
+          genDestinationPoint(startCords[0], startCords[1], distance, this.kinds).then(function(point){
             getAddress(new google.maps.LatLng(point[1], point[0])).then(function(output)
             {
               if(output == undefined || output.plus_code == undefined || output.plus_code.compound_code == undefined)
@@ -300,7 +301,7 @@ class PathHandler{
 
       var self = this
       console.log("Attempting to generate POI");
-      genWaypoints(originalPath, 25, ["historic", "churches"]).then(function(waypoints){
+      genWaypoints(originalPath, 25, this.kinds).then(function(waypoints){
         self.waypoints = waypoints
         self.createFinalPath();
       })
@@ -310,11 +311,15 @@ class PathHandler{
 
   createFinalPath(){
     console.log("creating final path from " + this.start + " to " + this.destination);
+    let waypointNoID = this.waypoints;
+    for (let i = 0; i < waypointNoID.length; i++){
+      delete waypointNoID[i].id
+    }
     this.directionsService
     .route({
       origin: this.start, //can also take placeId and long/lat
       destination: this.destination,
-      waypoints: this.waypoints,
+      waypoints: waypointNoID,
       travelMode: "DRIVING",
       optimizeWaypoints: true,
       provideRouteAlternatives: false,
