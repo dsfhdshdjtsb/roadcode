@@ -347,7 +347,7 @@ class PathHandler{
     let waypointNoID = JSON.parse(JSON.stringify(this.waypoints));
     console.log(waypointNoID);
     for (let i = 0; i < 5; i++){
-      userAction("http://api.opentripmap.com/0.1/en/places/xid/" + this.waypoints[i].id + "?apikey=" +otmApiKey).then(function(location){
+      userAction("https://api.opentripmap.com/0.1/en/places/xid/" + this.waypoints[i].id + "?apikey=" +otmApiKey).then(function(location){
         console.log(location)
         console.log(location.wikipedia)
       })
