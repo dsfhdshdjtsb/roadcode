@@ -11,7 +11,7 @@ const userAction = async (link) => {
 
 const getAttractions = async(radius, lat, lon, kinds) => {
     let kindsstr = toString(kinds);
-    const attractions = await userAction("http://api.opentripmap.com/0.1/en/places/radius?radius="
+    const attractions = await userAction("https://api.opentripmap.com/0.1/en/places/radius?radius="
     + radius
     + "&lon=" + lon
     + "&lat=" + lat 
