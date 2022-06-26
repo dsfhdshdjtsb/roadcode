@@ -6,7 +6,7 @@ $('.titleCheck').change(function() {
     }
 });
 
-$(".checkOption").change(function(){
+$(".checkLabel").change(function(){
     let checksInFamily = $(this).siblings().addBack().children();
         if(checksInFamily.toArray().every(element => element.checked == false)){
             $(this).parent().siblings().children().prop('checked', false);

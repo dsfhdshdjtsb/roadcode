@@ -240,6 +240,7 @@ class PathHandler{
     const distanceTxt = $("#distanceTxt")[0];
 
     createPathBtn.addEventListener("click", () => {
+      
       console.log("Start button pressed!")
       // let start = "33.6846, -117.8265"
       this.start = ""
@@ -248,9 +249,12 @@ class PathHandler{
       }
       let startCords = [this.originPlace.geometry.location.lat(), this.originPlace.geometry.location.lng()]
       let distance = distanceTxt.value * 1600;
+      this.kinds = this.handleCheckboxes();
+      if (this.kinds == 1){
+        alert("no filters selected")
+        return 1;
+      }
       var self = this
-      this.kinds = ["historic", "churches"]
-
       let counter = 0
       while(counter < 5){
         try{
@@ -271,12 +275,13 @@ class PathHandler{
             console.log(self.waypoints);
           })
           counter = 10
+
         }
         catch{
           counter++
         }
     }
-    });
+  });
 
     // autocomplete.addEventListener('place_changed', function(){
     //   let place = autocomplete.getPlace();
@@ -288,6 +293,20 @@ class PathHandler{
     //     console.log(place.name)
     //   }
     // });
+}
+
+  handleCheckboxes(){
+    let allChecked = $(".checkOption:checked");
+    let output = []
+    if (allChecked.length > 0){
+      for (let i = 0; i < allChecked.length; i++){
+          output.push(allChecked[i].value)
+      }
+      return output
+    }else{
+      $(".errortext").text("Please select some filters")
+      return 1;
+    }
   }
 
   generateShortPath(start, end){
@@ -316,7 +335,10 @@ class PathHandler{
   createFinalPath(){
     console.log("creating final path from " + this.start + " to " + this.destination);
     let waypointNoID = this.waypoints;
-    for (let i = 0; i < waypointNoID.length; i++){
+    for (let i = 0; i < 5; i++){
+      userAction("http://api.opentripmap.com/0.1/en/places/xid/" + this.waypoints[i].id + "?apikey=" +otmApiKey).then(function(event){
+        console.log(event)
+      })
       delete waypointNoID[i].id
     }
     this.directionsService

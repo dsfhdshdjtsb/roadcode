@@ -45,7 +45,7 @@ html, body {
   margin: 0 0 20px 0;
 }
 
-.checkOption input{
+.checkLabel input{
   margin-right: 0.5rem;
 }
 
@@ -61,7 +61,7 @@ html, body {
   flex-wrap: wrap;
 }
 
-.checkOption{
+.checkLabel{
   display:block;
   white-space: nowrap;
   font-family: "Nunito", sans-serif;
