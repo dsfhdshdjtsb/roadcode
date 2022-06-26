@@ -246,8 +246,8 @@ class PathHandler{
   setupClickListener() {
     this.createPathBtn = $(".createBtn")[0];
     const distanceTxt = $("#distanceTxt")[0];
-
     this.createPathBtn.addEventListener("click", () => {
+      $(".errortext").text("")
       if (this.originPlace == "" || distanceTxt.value == "" || this.originPlace.address_components.length == undefined){
         $(".errortext").text("Please fill out all fields")
         return;
