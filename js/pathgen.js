@@ -50,7 +50,7 @@ async function genDestinationPoint(lat, lon, radius, kinds)
     if(count < 15)
     {
         console.log("Valid destination found at coordinates" + attractions.features[0].geometry.coordinates);
-        return attractions.features[0].geometry.coordinates
+        return attractions.features[0]
     }
     $(".errortext").text("Could not find a good destination point, please try again");
     return false;
@@ -208,6 +208,7 @@ class PathHandler{
   map;
   markers;
   destination;
+  destinationCords;
   waypoints;
   createPathBtn;
   
@@ -245,7 +246,6 @@ class PathHandler{
     const distanceTxt = $("#distanceTxt")[0];
 
     this.createPathBtn.addEventListener("click", () => {
-
       if (this.originPlace == "" || distanceTxt.value == "" || this.originPlace.address_components.length == undefined){
         $(".errortext").text("Please fill out all fields")
         return;
@@ -253,6 +253,11 @@ class PathHandler{
       $(".loader").fadeIn();
       $(".createBtn").prop("disabled", true);
       this.start = ""
+      for(let i = 0; i<this.markers.length; i++)
+      {
+        this.markers[i].setMap(null);
+      }
+      this.markers = [];
       for (let i=0; i<this.originPlace.address_components.length; i++){
         this.start += " " + this.originPlace.address_components[i].short_name;
       }
@@ -267,7 +272,12 @@ class PathHandler{
       while(counter < 5){
         try{
           genDestinationPoint(startCords[0], startCords[1], distance, this.kinds).then(function(point){
-            getAddress(new google.maps.LatLng(point[1], point[0])).then(function(output)
+            console.log("point")
+            console.log(point)
+            self.destinationCords = {location: "", id: point.id, latlng: new google.maps.LatLng(point.geometry.coordinates[1],point.geometry.coordinates[0] )}
+            console.log("destinationCords")
+            console.log(self.destinationCords);
+            getAddress(new google.maps.LatLng(point.geometry.coordinates[1], point.geometry.coordinates[0])).then(function(output)
             {
               if(output == undefined || output.plus_code == undefined || output.plus_code.compound_code == undefined)
               {
@@ -348,6 +358,8 @@ class PathHandler{
   createMarkers(){
     var self = this;
     var i = 0;        
+    this.waypoints.push(this.destinationCords);
+    console.log(this.waypoints);
     console.log(self.waypoints.length)          
     function myLoop() {         
       setTimeout(function() {   
@@ -364,7 +376,7 @@ class PathHandler{
         if (i < self.waypoints.length) {           
           myLoop();            
         }                      
-      }, 250)
+      }, 300)
     }
 
       myLoop();    
