@@ -263,6 +263,11 @@ class PathHandler{
       }
       let startCords = [this.originPlace.geometry.location.lat(), this.originPlace.geometry.location.lng()]
       let distance = distanceTxt.value * 1600;
+      if(distance > 2500 * 1600)
+      {
+        $(".errortext").text("Please enter a distance less than 2500 miles")
+        return;
+      }
       this.kinds = this.handleCheckboxes();
       if (this.kinds == 1){
         return;
