@@ -10,9 +10,9 @@
 
 # Road Code 🚗🚗🚗
 Road code is REVOLUTIONARY(maybe) program made to make planning roadtrips easier! Plan your road trip in 3 easy steps!
-![image](https://user-images.githubusercontent.com/66652245/175797303-750f2b63-616e-4dd7-b747-a85511991cb9.png)
 
 1. go to https://monkfish-app-oh3nw.ondigitalocean.app/ 😏
+![image](https://user-images.githubusercontent.com/66652245/175797303-750f2b63-616e-4dd7-b747-a85511991cb9.png)
 2. input your starting location, the distance you want to travel, and select what kind of places interest you.
 3. click CREATE PATH to generate a UNIQUE and PERSONALLIZED road trip!
 
