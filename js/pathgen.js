@@ -370,6 +370,7 @@ class PathHandler{
       this.directionsRenderer.setDirections(response); //if direction service receives a response, then render the directions given
       this.createMarkers();
     })
+    .catch((e) => window.alert("Directions request failed, please try again")); //else no response, leave error message
     
   }
 
