@@ -216,7 +216,7 @@ class PathHandler{
       fields: ['address_components', 'geometry']
     })
     this.directionsRenderer.setMap(map);
-    this.waypoints;
+    this.waypoints = [];
     this.originPlace = "";
     this.setupClickListener();
     this.setupPlaceChangedListener(autocomplete);
@@ -332,15 +332,22 @@ class PathHandler{
     })
   }
 
-  createFinalPath(){
-    console.log("creating final path from " + this.start + " to " + this.destination);
-    let waypointNoID = this.waypoints;
-    for (let i = 0; i < 5; i++){
+  createMarkers(){
+    for (let i = 0; i < this.waypoints.length; i++){
+      console.log(this.waypoints[i].location);
       userAction("http://api.opentripmap.com/0.1/en/places/xid/" + this.waypoints[i].id + "?apikey=" +otmApiKey).then(function(event){
         console.log(event)
       })
+    }
+  }
+
+  createFinalPath(){
+    console.log("creating final path from " + this.start + " to " + this.destination);
+    let waypointNoID = this.waypoints;
+    for (let i = 0; i < waypointNoID.length; i++){
       delete waypointNoID[i].id
     }
+
     this.directionsService
     .route({
       origin: this.start, //can also take placeId and long/lat
@@ -352,6 +359,7 @@ class PathHandler{
     })
     .then((response) => {
       this.directionsRenderer.setDirections(response); //if direction service receives a response, then render the directions given
+      this.createMarkers();
     })
     
   }
