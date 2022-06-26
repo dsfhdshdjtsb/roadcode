@@ -160,12 +160,12 @@ async function genWaypoints(waypointList, num, kinds){
         {
           if(shuffled[j] != undefined)
           {
-            
-            let address = await getAddress(new google.maps.LatLng(shuffled[j].geometry.coordinates[1],shuffled[j].geometry.coordinates[0] ))
+            let latlngobj = new google.maps.LatLng(shuffled[j].geometry.coordinates[1],shuffled[j].geometry.coordinates[0] )
+            let address = await getAddress(latlngobj)
             if(address.plus_code.compound_code != undefined)
             {
               console.log("Pushing following address to list" + address.plus_code.compound_code)
-              locationList.push({location: address.plus_code.compound_code, id: shuffled[j].id})
+              locationList.push({location: address.plus_code.compound_code, id: shuffled[j].id, latlng: latlngobj});
             }
           }
         }
@@ -362,6 +362,7 @@ class PathHandler{
     // }
     for (let i = 0; i < waypointNoID.length; i++){
       delete waypointNoID[i].id
+      delete waypointNoID[i].latlng;
     }
     console.log("waypoint no id");
     console.log(this.waypoints);
