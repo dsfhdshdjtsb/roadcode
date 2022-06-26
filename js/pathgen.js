@@ -205,18 +205,20 @@ class PathHandler{
   originPlace; //output of autocomplete
   start;
   kinds;
-  destination
+  map;
+  destination;
   waypoints;
   createPathBtn;
   
   constructor(map){
-    this.directionsRenderer = new google.maps.DirectionsRenderer({draggable: true});
+    this.directionsRenderer = new google.maps.DirectionsRenderer({draggable: true, suppressMarkers:true});
     this.directionsService = new google.maps.DirectionsService();
     const autocomplete = new google.maps.places.Autocomplete($("#autocomplete")[0] ,{
       componentRestrictions: {'country' : ['US']},
       fields: ['address_components', 'geometry']
     })
     this.directionsRenderer.setMap(map);
+    this.map = map;
     this.waypoints = [];
     this.originPlace = "";
     this.setupClickListener();
@@ -342,11 +344,17 @@ class PathHandler{
   }
 
   createMarkers(){
+    let markers = []
     for (let i = 0; i < this.waypoints.length; i++){
-      console.log(this.waypoints[i].location);
-      userAction("http://api.opentripmap.com/0.1/en/places/xid/" + this.waypoints[i].id + "?apikey=" +otmApiKey).then(function(event){
-        console.log(event)
+      let marker = new google.maps.Marker({
+        position: this.waypoints[i].latlng,
+        title: "penis"
       })
+      marker.setMap(this.map);
+      markers.push(marker);
+      // userAction("http://api.opentripmap.com/0.1/en/places/xid/" + this.waypoints[i].id + "?apikey=" +otmApiKey).then(function(event){
+      //   console.log(event)
+      // })
     }
   }
 
@@ -379,7 +387,7 @@ class PathHandler{
       this.directionsRenderer.setDirections(response); //if direction service receives a response, then render the directions given
       $(".loader").fadeOut();
       $(".createBtn").prop("disabled", false);
-      //this.createMarkers();
+      this.createMarkers();
     })
     .catch((e) => {
 
