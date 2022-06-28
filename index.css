@@ -211,12 +211,6 @@ input[type="checkbox"]:checked::before {
   background-color: rgb(47, 188, 134);
 }
 
-@media screen and (max-width: 600px) {
-  .filters{
-    bottom: 100px;
-    height: 50vh;
-  }
-}
 
 .rotated {
   transform: rotate(180deg);
