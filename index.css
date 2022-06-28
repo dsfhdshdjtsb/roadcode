@@ -191,7 +191,7 @@ input[type="checkbox"]:checked::before {
 .options{
   margin: 10px;
   width: 260px;
-  height: 35vh;
+  height: 20vh;
 }
 
 .container{
