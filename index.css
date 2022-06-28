@@ -183,9 +183,8 @@ input[type="checkbox"]:checked::before {
 
 .filters{
   overflow-y:overlay;
-  position: absolute;
+  position: relative;
   border-radius: 4px; 
-  bottom: 0;
   height: 70vh;
 }
 
@@ -210,6 +209,13 @@ input[type="checkbox"]:checked::before {
 
 .btn:hover:enabled {
   background-color: rgb(47, 188, 134);
+}
+
+@media screen and (max-width: 600px) {
+  .filters{
+    bottom: 100px;
+    height: 50vh;
+  }
 }
 
 .rotated {
