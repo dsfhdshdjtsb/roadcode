@@ -1,6 +1,5 @@
 otmApiKey= "5ae2e3f221c38a28845f05b63f732523be8926b6484b88151a8dd476";
 gmApiKey = "AIzaSyCTlMIrLbEtYu8K7Kheto9hxaIqWjzOQ8E"
-wApiKey = "jA5nqVNx_QBSh4TNxLr-"
 
 
 const userAction = async (link) => {
@@ -27,11 +26,26 @@ const getAddress = async(latlng) => {
   return address
 }
 
-const getWater = async(lat, lon) => {
-    const water = await userAction("https://api.onwater.io/api/v1/results/" + lat +","+ lon + "?access_token=" + wApiKey)
-    return water;
+function getWater(latitude, longitude) {
+  return new Promise((resolve, reject) => {
+    const geocoder = new google.maps.Geocoder();
+    const latLng = new google.maps.LatLng(latitude, longitude);
+    
+    geocoder.geocode({ location: latLng }, (results, status) => {
+      if (status === google.maps.GeocoderStatus.OK) {
+        if (results.length > 0) {
+          const addressComponents = results[0].address_components;
+          const isOnWater = addressComponents.some(component => component.types.includes("natural_feature") && component.long_name === "Water");
+          resolve(isOnWater);
+        } else {
+          reject(new Error("No results found."));
+        }
+      } else {
+        reject(new Error("Geocoder failed due to: " + status));
+      }
+    });
+  });
 }
-
 async function genDestinationPoint(lat, lon, radius, kinds)
 {
     console.log("Attempting to generate destination point")
@@ -44,9 +58,9 @@ async function genDestinationPoint(lat, lon, radius, kinds)
         onWater = await getWater(point.lat, point.lon);
         attractions = await getAttractions(radius, point.lat, point.lon, kinds)
         console.log("Current attempt number:" + count)
-        console.log("Current water status:" + onWater.water)
+        console.log("Current water status:" + onWater)
         console.log("Current number of nearby attractions:" + attractions.features.length)
-    }while( count < 15 && (onWater.water || attractions.features.length < 5))
+    }while( count < 15 && (onWater|| attractions.features.length < 5))
     if(count < 15)
     {
         console.log("Valid destination found at coordinates" + attractions.features[0].geometry.coordinates);
@@ -177,11 +191,11 @@ async function genWaypoints(waypointList, num, kinds){
 
 function genReturnWaypoint(lat_1, lon_1, lat_2, lon_2)
 {
-    if(!getWater(lat_1, lon_2).water)
+    if(!getWater(lat_1, lon_2))
     {
         return {"lat": lat_1, "lon": lon_2}
     }
-    else if (!getWater(lat_2, lon_1).water)
+    else if (!getWater(lat_2, lon_1))
     {
         return {"lat": lat_2, "lon": lon_1}
     }
