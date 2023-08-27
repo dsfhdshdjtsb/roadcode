@@ -1,5 +1,5 @@
-otmApiKey= "5ae2e3f221c38a28845f05b63f732523be8926b6484b88151a8dd476";
-gmApiKey = "AIzaSyCTlMIrLbEtYu8K7Kheto9hxaIqWjzOQ8E"
+otmApiKey= "";
+gmApiKey = ""
 
 
 const userAction = async (link) => {
